@@ -5,6 +5,8 @@
     margin-top: 30px;
     background: #fff;
     padding-bottom: 30px;
+    border-radius: 25px;
+    box-shadow: 0px;
 }
 
 .header{
@@ -76,7 +78,7 @@
 .submit-container{
     display: flex;
     gap: 30px;
-    margin: 60px auto;
+    margin: 50px 50px;
 
 }
 
@@ -92,6 +94,8 @@
     font-size: 19px;
     font-weight: 700;
     cursor: pointer;
+ 
+
 }
 
 .gray{
