@@ -5,8 +5,8 @@ import {
   
   const UserTable = ({ users, onDeleteClick }) => {
     return (
-      <TableContainer component={Paper} sx={{ mt: 2 }}>
-        <Table>
+        <TableContainer component={Paper} sx={{ width: '100%', overflowX: 'auto' }}>
+        <Table sx={{ minWidth: 650 }} aria-label="tabla de usuarios">
           <TableHead sx={{ backgroundColor: '#232f3e' }}>
             <TableRow>
               <TableCell sx={{ color: 'white' }}>Nombre</TableCell>
@@ -27,6 +27,7 @@ import {
                     variant="contained"
                     size="small"
                     onClick={() => onDeleteClick(user)}
+                    sx={{ whiteSpace: 'nowrap' }}
                   >
                     Eliminar
                   </Button>

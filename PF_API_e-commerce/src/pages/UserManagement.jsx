@@ -4,6 +4,11 @@ import {
   DialogContent, TextField, DialogActions
 } from '@mui/material';
 import UserTable from '../components/UserTable';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import Layout from '../components/Layout';
+
+
 
 const API_URL = 'http://localhost:3001/users';
 
@@ -57,22 +62,35 @@ const UserManagement = () => {
   };
 
   return (
-    <Box sx={{ p: 4, backgroundColor: '#f3f3f3', minHeight: '100vh' }}>
-      <Typography variant="h4" gutterBottom sx={{ color: '#232f3e' }}>
-        Gestión de Usuarios
-      </Typography>
-
-      <Button
-        variant="contained"
-        sx={{ backgroundColor: '#febd69', color: '#232f3e', mb: 2 }}
-        onClick={() => setOpenAdd(true)}
-      >
-        Agregar Usuario
-      </Button>
-
-      <UserTable users={users} onDeleteClick={handleDeleteClick} />
-
-      {/* Modal Agregar Usuario */}
+    <>
+      <Layout>
+        <Typography variant="h4" gutterBottom sx={{ color: '#232f3e' }}>
+          Gestión de Usuarios
+        </Typography>
+  
+        <Button
+          variant="contained"
+          sx={{ backgroundColor: '#febd69', color: '#232f3e', mb: 2 }}
+          onClick={() => setOpenAdd(true)}
+        >
+          Agregar Usuario
+        </Button>
+  
+        <Box
+            sx={{
+                display: 'flex',
+                justifyContent: 'flex-begin',
+                width: '100%',
+                overflowX: 'auto',
+            }}
+            >
+                <Box sx={{ width: '100%', maxWidth: '900px' }}>
+                    <UserTable users={users} onDeleteClick={handleDeleteClick} />
+                </Box>
+            </Box>
+      </Layout>
+  
+      {/* Diálogos afuera del layout */}
       <Dialog open={openAdd} onClose={() => setOpenAdd(false)}>
         <DialogTitle>Agregar Nuevo Usuario</DialogTitle>
         <DialogContent>
@@ -110,8 +128,7 @@ const UserManagement = () => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      {/* Modal Confirmar Eliminación */}
+  
       <Dialog open={openDelete} onClose={() => setOpenDelete(false)}>
         <DialogTitle>Confirmar Eliminación</DialogTitle>
         <DialogContent>
@@ -124,8 +141,9 @@ const UserManagement = () => {
           </Button>
         </DialogActions>
       </Dialog>
-    </Box>
+    </>
   );
+  
 };
 
 export default UserManagement;
