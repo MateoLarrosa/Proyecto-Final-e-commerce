@@ -1,0 +1,52 @@
+.gestion-productos-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f2f2;
+  }
+  
+  .gestion-productos-title {
+    margin-bottom: 20px;
+    color: #c71d23; /* Rojo de Amazon */
+  }
+  
+  .gestion-productos-table-container {
+    width: 90%;
+    max-width: 1000px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .gestion-productos-table {
+    width: 100%;
+  }
+  
+  .table-header-cell {
+    background-color: #232f3e; /* Azul oscuro de la barra superior de Amazon */
+    color: white;
+    font-weight: bold;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .table-body-cell {
+    padding: 12px;
+  }
+  
+  .edit-button {
+    background-color: #ff9900 !important; /* Naranja de los botones de Amazon */
+    color: black !important;
+    &:hover {
+      background-color: #e68a00 !important;
+    }
+  }
+  
+  .delete-button {
+    background-color: #c71d23 !important; /* Rojo de Amazon */
+    color: white !important;
+    &:hover {
+      background-color: #a8181d !important;
+    }
+  }
