@@ -1,0 +1,42 @@
+.quantity-control {
+    display: inline-flex;
+    align-items: center;
+    border: 3px solid gold;
+    border-radius: 20px;
+    padding: 5px 5px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+  }
+
+  .quantity-control button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    padding: 0 10px;
+    cursor: pointer;
+  }
+
+  .quantity-control span {
+    margin: 0 10px;
+    font-size: 16px;
+  }
+
+  .quantity-control button:focus {
+    outline: none;
+  }
+
+  .cart-container{
+    display: flex;
+    flex-direction: row;
+    font-family: 'Open Sans', sans-serif;
+    gap: 30px;
+    margin-left: 70px;
+  }
+
+  .div-img img{
+    height: 200px;
+
+  }
+  .div-img{
+    padding: 30px;
+  }
