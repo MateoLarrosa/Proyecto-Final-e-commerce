@@ -1,0 +1,176 @@
+
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+* {
+    box-sizing: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #131921;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    z-index: 100;
+    gap: 15px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    min-width: 200px;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 24px;
+    color: white;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    height: 100%; /* asegura altura completa */
+    padding: 0 5px; /* padding horizontal */
+}
+
+.logo:hover {
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+.search-container {
+    display: flex;
+    flex: 1;
+    max-width: 600px;
+    min-width: 200px;
+}
+
+.nav-input {
+    width: 100%;
+    height: 36px;
+    border: none;
+    padding: 0 10px;
+    font-size: 15px;
+    border-radius: 4px 0 0 4px;
+}
+
+.nav-button {
+    background-color: #FEBD69;
+    height: 36px;
+    width: 45px;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-button:hover {
+    background-color: #f3a847;
+}
+
+.nav-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    min-width: 120px;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.nav-link {
+    padding: 5px 7px;
+    border: 1px solid transparent;
+}
+
+.nav-link:hover {
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+.nav-link img {
+    width: 24px;
+    height: 24px;
+}
+
+.user-icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    font-size: 12px;
+    padding: 5px 7px;
+    border: 1px solid transparent;
+}
+
+.user-icon-container:hover {
+    border: 1px solid white;
+    border-radius: 2px;
+}
+
+.user-icon-container img {
+    width: 24px;
+    height: 24px;
+}
+
+
+.sub-header {
+    position: sticky;
+    top: 60px;
+    width: 100%;
+    height: 40px;
+    background-color: #232F3E;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    z-index: 99;
+}
+
+.sub-navbar {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sub-navbar-logo img {
+    width: 24px;
+    height: 24px;
+}
+
+.sub-navbar-links {
+    display: flex;
+    gap: 20px;
+}
+
+.sub-navbar-links a {
+    color: white;
+    font-size: 14px;
+    white-space: nowrap;
+    padding: 5px;
+}
+
+.sub-navbar-links a:hover {
+    text-decoration: underline;
+}

@@ -6,22 +6,21 @@ import user_icon from '../../assets/person.png'
 
 
 const Login = () => {
-
-    const [action,setAction] = useState("Crear Usuario");
-
+    const [action, setAction] = useState("Crear Usuario");
 
     return(
-        
         <div className="container">
-            <div className="header">
+            <div className="header-container">
                 <div className="text">{action}</div>
                 <div className="underLine"></div>
             </div>
             <div className="inputs">
-                <div className="input">
-                    <img src={user_icon} alt="" />
-                    <input type="text" placeholder="Nombre" />
-                </div>
+                {action === "Crear Usuario" && (
+                    <div className="input">
+                        <img src={user_icon} alt="" />
+                        <input type="text" placeholder="Nombre" />
+                    </div>
+                )}
                 <div className="input">
                     <img src={email_icon} alt="" />
                     <input type="email" placeholder="Email"/>
@@ -33,11 +32,21 @@ const Login = () => {
             </div>
             <div className="forgot-password">¿Olvido su contraseña? <span>Haga click aca!</span></div>
             <div className="submit-container">
-                <div className={action==="Iniciar Sesion"?"submit gray":"submit"}>Crear Usuario</div>
-                <div className={action==="Crear Usuario"?"submit gray": "submit"}>Iniciar Sesion</div>
+                <div 
+                    className={action === "Iniciar Sesion" ? "submit gray" : "submit"} 
+                    onClick={() => setAction("Crear Usuario")}
+                >
+                    Crear Usuario
+                </div>
+                <div 
+                    className={action === "Crear Usuario" ? "submit gray" : "submit"} 
+                    onClick={() => setAction("Iniciar Sesion")}
+                >
+                    Iniciar Sesion
+                </div>
             </div>
         </div>
-        
-    )}
+    )
+}
 
 export default Login
