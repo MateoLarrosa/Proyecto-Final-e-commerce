@@ -1,0 +1,7 @@
+.carousel-container {
+    margin-top: 101px; /* Ajusta según la altura del NavBar */
+    margin-bottom: 60px; /* Ajusta según la altura del Footer */
+    min-height: 400px;
+    max-height: 100vh; /* Evita que exceda la altura de la ventana */
+    overflow: hidden;
+}

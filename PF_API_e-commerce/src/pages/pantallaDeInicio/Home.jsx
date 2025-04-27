@@ -7,7 +7,6 @@ import  Carousel  from "../../Components/Carousel";
 
 
 
-
 const Home = () => {
     return(
         <div className="home-container">
@@ -16,7 +15,7 @@ const Home = () => {
                 <Carousel/>
             </main>
             
-            <Footer></Footer>
+            <Footer/>
 
         </div>
     )

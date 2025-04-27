@@ -8,8 +8,10 @@ import AmazonDiaMadre from '../assets/AmazonDiaMadre.jpg';
 import AmazonJuguetes from '../assets/AmazonJuguetes.jpg';
 
 const Carrusel = () => {
+    
+
     return (
-        <Carousel fade className="w-100" style={{ height: "400px" }}>
+        <Carousel fade className="w-100"  style={{ height: "390px" }}>
             <Carousel.Item>
                 <img
                     className="d-block w-100"

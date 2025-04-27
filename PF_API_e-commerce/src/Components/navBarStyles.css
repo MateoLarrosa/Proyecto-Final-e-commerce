@@ -49,10 +49,7 @@ a {
     padding: 0 5px; /* padding horizontal */
 }
 
-.logo:hover {
-    border: 1px solid white;
-    border-radius: 2px;
-}
+
 
 .search-container {
     display: flex;

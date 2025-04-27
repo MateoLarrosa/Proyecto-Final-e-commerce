@@ -5,6 +5,7 @@ import password_icon from '../../assets/password.png'
 import user_icon from '../../assets/person.png'
 
 
+
 const Login = () => {
     const [action, setAction] = useState("Crear Usuario");
 
@@ -29,8 +30,9 @@ const Login = () => {
                     <img src={password_icon} alt="" />
                     <input type="password" placeholder="Password" />
                 </div>
+                <div className="forgot-password">¿Olvido su contraseña? <span>Haga click aca!</span></div>
             </div>
-            <div className="forgot-password">¿Olvido su contraseña? <span>Haga click aca!</span></div>
+
             <div className="submit-container">
                 <div 
                     className={action === "Iniciar Sesion" ? "submit gray" : "submit"} 
