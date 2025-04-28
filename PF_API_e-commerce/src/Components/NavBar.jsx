@@ -41,7 +41,7 @@ return (
             <a href="/">Ofertas</a>
             <a href="/">Tendencias</a>
             <a href="/">Novedades</a>
-            <a href="/">Más Vendidos</a>
+            <a href="/mi-perfil">Tu Cuenta</a>
         </div>
         </nav>
     </header>

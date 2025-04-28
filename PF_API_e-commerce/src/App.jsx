@@ -5,18 +5,21 @@ import viteLogo from '/vite.svg';
 import './App.css';
 import Login from './pages/pantallaDeInicio/Login';
 import Home from './pages/pantallaDeInicio/Home';
-import UserMockup from './components/UserMockup';
+// import UserMockup from './components/UserMockup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div>
-      <Login />
-      {/* Si querés agregar también UserMockup, podrías ponerlo acá */}
-      {/* <UserMockup /> */}
-    </div>
+    <>
+      <Home />
+    </>
+    // <div>
+    //   <Login />
+    //   {/* Si querés agregar también UserMockup, podrías ponerlo acá */}
+    //   {/* <UserMockup /> */}
+    // </div>
   );
 }
 

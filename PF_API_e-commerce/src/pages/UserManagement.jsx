@@ -3,10 +3,10 @@ import {
   Box, Typography, Button, Dialog, DialogTitle,
   DialogContent, TextField, DialogActions
 } from '@mui/material';
-import UserTable from '../components/UserTable';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import Layout from '../components/Layout';
+import UserTable from '../Components/UserTable';
+import Header from '../Components/Header';
+import Footer from '../Components/Footer';
+import Layout from '../Components/Layout';
 
 
 
