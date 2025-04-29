@@ -26,7 +26,7 @@ return (
         <a href="/" className="nav-link">
             <img src={locationIcon} alt="ubicacion" />
         </a>
-        <a href="/" className="nav-link">
+        <a href="/mi-carrito" className="nav-link">
             <img src={cartIcon} alt="carrito" />
         </a>
         </div>
