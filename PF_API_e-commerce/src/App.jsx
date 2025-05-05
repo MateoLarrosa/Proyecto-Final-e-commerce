@@ -1,9 +1,16 @@
-import './App.css';
-import Catalogo from './pages/Catalogo';
-import NavBar from './components/NavBar';
-import Footer from './components/Footer';
+import React from 'react';
 import gestionProductos from './pages/gestionProductos';
+import Catalogo from './pages/Catalogo';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { useState } from 'react';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import './App.css';
+import Login from './pages/pantallaDeInicio/Login';
+import Home from './pages/pantallaDeInicio/Home';
+// import UserMockup from './components/UserMockup';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -54,17 +61,22 @@ const theme = createTheme({
   },
 });
 
-function App() {
-  const CurrentPage = gestionProductos; 
-  return (  
-    <ThemeProvider theme={theme}>
-        <div id='app-container'>
-        <NavBar />
-        <CurrentPage/>
-        <Footer />
-      </div>
+<ThemeProvider theme={theme}>
+        // Aca adentro se podria agregar todo lo que va en el return para que conozca los componentes qeu se crearon arriba con el theme
     </ThemeProvider>
-    
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <>
+      <Home />
+    </>
+    // <div>
+    //   <Login />
+    //   {/* Si querés agregar también UserMockup, podrías ponerlo acá */}
+    //   {/* <UserMockup /> */}
+    // </div>
   );
 }
 

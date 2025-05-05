@@ -1,5 +1,6 @@
 /* Con este codigo podemos asegurar que html, body y #root ocupen toda la altura */
 html, body, #root {
+
   height: 100%;
   margin: 0;
   padding: 0;
@@ -10,6 +11,14 @@ html, body, #root {
   box-sizing: inherit; /* Hereda box-sizing de los padres */
 }
 
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+
+
 
 /* Se aplico Flexbox al contenedor directo de NavBar, Content y Footer */
 #app-container {
@@ -17,5 +26,3 @@ html, body, #root {
   flex-direction: column;
   min-height: 100%;
 }
-
-
