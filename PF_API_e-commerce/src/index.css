@@ -1,3 +1,13 @@
+
+/* index.css */
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f0f2f2; /* Fondo gris claro general */
+    font-family: "Amazon Ember", Arial, sans-serif; /* Fuente base */
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -66,11 +76,24 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
-  a:hover {
-    color: #747bff;
+  
+  *, *::before, *::after {
+    box-sizing: inherit;
   }
-  button {
-    background-color: #f9f9f9;
+  
+  #app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    background-color: #fff; /* Fondo blanco para el contenedor principal */
   }
-}
 
+  
+  /* Asegura que el main content crezca */
+  main {
+      flex-grow: 1;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      background-color: #f0f2f2; /* Fondo gris claro para el área de contenido */
+  }
+  
