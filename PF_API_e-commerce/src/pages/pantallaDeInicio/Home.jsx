@@ -1,21 +1,26 @@
 import React from "react";
 import Footer from "../../Components/Footer"
-import { NavBar } from "../../Components/NavBar"
+import NavBar from "../../Components/NavBar"
+import NuevoNavBar from "../../Components/NuevoNavBar";
 import  Carousel  from "../../Components/Carousel"; 
 
 
 
 const Home = () => {
     return(
-        <div className="home-container">
-            <NavBar/>
-            <main className="main-content">
-                <Carousel/>
-            </main>
+        <>
+            <NuevoNavBar/>
             
-            <Footer/>
+            <div className="home-container">
+                
+                <main className="main-content">
+                    <Carousel/>
+                </main>
+                
+                <Footer/>
 
-        </div>
+            </div>
+        </>
     )
 }
 

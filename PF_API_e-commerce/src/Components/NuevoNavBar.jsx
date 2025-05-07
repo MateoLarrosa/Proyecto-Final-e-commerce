@@ -51,11 +51,11 @@ export default function NuevoNavBar() {
                     flexDirection:'row',
                     justifyContent:'center'
                 }}>
-                    <IconButton sx={{ color: 'white' }}>
+                    <IconButton sx={{ color: 'white', bgcolor:'#131921 !important' }}>
                         <ShoppingCartIcon />
                     </IconButton>
 
-                    <IconButton sx={{ color: 'white' }}>
+                    <IconButton sx={{ color: 'white', bgcolor:'#131921 !important' }}>
                         <PersonIcon />
                     </IconButton>
                 </Box>
@@ -70,10 +70,10 @@ export default function NuevoNavBar() {
                 gap:'8px'
                 }}>
                 
-                <Button variant='text' sx={{color:'white'}}>Ofertas</Button>
-                <Button variant='text' sx={{color:'white'}}>Tendencias</Button>
-                <Button variant='text' sx={{color:'white'}}>Novedades</Button>
-                <Button variant='text' sx={{color:'white'}}>Más vendidos</Button>
+                <Button variant='text' sx={{color:'white',bgcolor:'#232F3E !important'}}>Ofertas</Button>
+                <Button variant='text' sx={{color:'white',bgcolor:'#232F3E !important'}}>Tendencias</Button>
+                <Button variant='text' sx={{color:'white',bgcolor:'#232F3E !important'}}>Novedades</Button>
+                <Button variant='text' sx={{color:'white',bgcolor:'#232F3E !important'}}>Más vendidos</Button>
 
             </Toolbar>
         </AppBar>
