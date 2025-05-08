@@ -1,3 +1,4 @@
+
 import Card from "./Card";
 import NuevoNavBar from '../../Components/NuevoNavBar.jsx';
 import Footer from '../../Components/Footer.jsx';
@@ -5,7 +6,9 @@ import styles from './appStyles.module.css';
 import { useNavigate } from 'react-router-dom';
 
 function MiPerfilApp() {
+
   const navigate = useNavigate();
+  
   return (
     <>
       <NuevoNavBar />

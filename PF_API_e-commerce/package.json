@@ -13,9 +13,9 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^7.1.0",
-    "@mui/material": "^7.1.0",
-    "@mui/styles": "^6.4.11",
+    "@fontsource/inter": "^5.2.5",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
     "bootstrap": "^5.3.5",
     "embla-carousel-react": "^8.6.0",
     "react": "^19.0.0",

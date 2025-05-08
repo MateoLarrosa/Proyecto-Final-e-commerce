@@ -59,9 +59,8 @@ export default function NuevoNavBar() {
                         <ShoppingCartIcon />
                     </IconButton>
 
-                    <IconButton sx={{ color: 'white', bgcolor:'#131921 !important' }}
-                        onClick={() => navigate('/mi-perfil')} // Cambia la ruta según sea necesario
-                        >
+                    <IconButton sx={{ color: 'white', bgcolor:'#131921 !important' }} onClick={() => navigate('/mi-perfil')}>
+
                         <PersonIcon />
                     </IconButton>
                 </Box>
