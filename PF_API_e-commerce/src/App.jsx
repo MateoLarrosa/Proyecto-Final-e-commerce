@@ -1,5 +1,5 @@
 import React from 'react';
-import gestionProductos from './pages/gestionProductos';
+import gestionProductos from './pages/gestionProductos/GestionProductos';
 import Catalogo from './pages/Catalogo';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useState } from 'react';
