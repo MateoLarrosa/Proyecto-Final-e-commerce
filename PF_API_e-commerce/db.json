@@ -12,5 +12,84 @@
       "email": "ana@example.com",
       "role": "Cliente"
     }
+  ],
+  "productos": [
+    {
+      "id": "1",
+      "nombre": "Camiseta Amazonas Basic",
+      "precio": 1250.99,
+      "stock": 50,
+      "categoria": "Ropa"
+    },
+    {
+      "id": "2",
+      "nombre": "Auriculares Bluetooth ProSound",
+      "precio": 3500,
+      "stock": 20,
+      "categoria": "Electrónica"
+    },
+    {
+      "id": "3",
+      "nombre": "Zapatillas Running UltraBoost",
+      "precio": 5800.5,
+      "stock": 100,
+      "categoria": "Calzado"
+    },
+    {
+      "id": "4",
+      "nombre": "Teclado Mecánico RGB GamerX",
+      "precio": 4200.75,
+      "stock": 15,
+      "categoria": "Electrónica"
+    },
+    {
+      "id": "5",
+      "nombre": "Libro 'El Código Da Vinci' Ed. Especial",
+      "precio": 1500,
+      "stock": 8,
+      "categoria": "Libros"
+    },
+    {
+      "id": "6",
+      "nombre": "Monitor Curvo 27\" Full HD",
+      "precio": 15000,
+      "stock": 1,
+      "categoria": "Electrónica"
+    },
+    {
+      "id": "7",
+      "nombre": "Cafetera Express Automática",
+      "precio": 6700,
+      "stock": 30,
+      "categoria": "Hogar"
+    },
+    {
+      "id": "8",
+      "nombre": "Mochila Urbana Antirrobo",
+      "precio": 2800,
+      "stock": 60,
+      "categoria": "Accesorios"
+    },
+    {
+      "id": "9",
+      "nombre": "Silla Gamer Ergonómica Pro",
+      "precio": 9500,
+      "stock": 12,
+      "categoria": "Muebles"
+    },
+    {
+      "id": "10",
+      "nombre": "Smartwatch Deportivo GPS Fit+",
+      "precio": 7200,
+      "stock": 40,
+      "categoria": "Electrónica"
+    },
+    {
+      "id": "fbfa",
+      "nombre": "Cubo rubik 3x3",
+      "precio": 15000,
+      "stock": 9,
+      "categoria": "Juguetes"
+    }
   ]
 }
