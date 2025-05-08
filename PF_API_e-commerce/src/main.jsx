@@ -10,8 +10,10 @@ import MiPerfilApp from './pages/miPerfil/MiPerfilApp.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import CarritoCompleto from './pages/carritoDeCompra/CarritoCompleto.jsx';
+import GestionProductos from './pages/gestionProductos/GestionProductos.jsx';  
 import InfoLoginYSeguridad from './pages/miPerfil/InfoLoginYSeguridad.jsx';
 import CustomerService from './pages/miPerfil/CustomerService.jsx';
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -24,8 +26,10 @@ createRoot(document.getElementById('root')).render(
         <Route path="/user-management" element={<UserManagement />} />
         <Route path="/mi-perfil" element={<MiPerfilApp />} />
         <Route path="/mi-carrito" element={<CarritoCompleto/>} />
+        <Route path="/gestion-de-productos" element={<GestionProductos/>} />
         <Route path="/mi-perfil/login-seguridad" element={<InfoLoginYSeguridad/>} />
         <Route path="/mi-perfil/customer-service" element={<CustomerService/>} />
+
       </Routes>
     </BrowserRouter>
   </StrictMode>

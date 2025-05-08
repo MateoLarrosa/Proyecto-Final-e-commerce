@@ -3,6 +3,7 @@
   padding: 24px;
   /* background-color: #f0f2f2; Ya está en global */
   flex-grow: 1;
+  min-height: 100vh; 
 }
 
  .gestionProductosPaper {

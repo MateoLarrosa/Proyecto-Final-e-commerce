@@ -6,9 +6,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
 
 export default function NuevoNavBar() {
-
     const navigate = useNavigate();
-
     return(
         <AppBar 
             position="sticky"
@@ -55,11 +53,14 @@ export default function NuevoNavBar() {
                     flexDirection:'row',
                     justifyContent:'center'
                 }}>
-                    <IconButton sx={{ color: 'white', bgcolor:'#131921 !important' }}>
+                    <IconButton sx={{ color: 'white', bgcolor:'#131921 !important' }}
+                        onClick={() => navigate('/mi-carrito')} // Cambia la ruta según sea necesario
+                    >
                         <ShoppingCartIcon />
                     </IconButton>
 
                     <IconButton sx={{ color: 'white', bgcolor:'#131921 !important' }} onClick={() => navigate('/mi-perfil')}>
+
                         <PersonIcon />
                     </IconButton>
                 </Box>
