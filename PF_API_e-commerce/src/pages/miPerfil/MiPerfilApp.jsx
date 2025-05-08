@@ -1,5 +1,5 @@
 import Card from "./Card"
-import  NavBar  from '../../Components/NavBar.jsx';
+import  NuevoNavBar  from '../../Components/NuevoNavBar.jsx';
 import Footer from '../../Components/Footer.jsx';
 import styles from './appStyles.module.css'
 
@@ -7,8 +7,8 @@ function MiPerfilApp() {
   
   return (
     <>
+      <NuevoNavBar />
       <div className={styles.appContainer}>
-        <NavBar />
         <div className={styles.appContainerTitle}>
           <h1>Tu Cuenta</h1>
         </div>

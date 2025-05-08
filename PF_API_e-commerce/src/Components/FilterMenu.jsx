@@ -9,10 +9,13 @@ const FilterMenu = ({ onCategoryChange, onOrderChange }) => {
                 <select onChange={(e) => onCategoryChange(e.target.value)}>
                     <option value="">Todos</option>
                     <option value="electronicos">Electrónicos</option>
+                    <option value="zapatillas">Zapatillas</option>
+                    <option value="ropa">Ropa</option>
+                    <option value="libros">Libros</option>
+                    <option value="juguetes">Juguetes</option>
                     <option value="para el hogar">Para el hogar</option>
-                    <option value="vacacionar">Vacacionar</option>
-                    <option value="belleza">Belleza</option>
-                    <option value="cocina">Cocina</option>
+                    <option value="mochilas">Mochilas/Bolsos</option>
+
                 </select>
             </div>
 

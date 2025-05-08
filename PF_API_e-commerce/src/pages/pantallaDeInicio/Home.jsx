@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Footer from "../../Components/Footer";
-import NavBar from "../../Components/NavBar";
 import Carousel from "../../Components/Carousel";
 import ProductCard from "../../Components/ProductCard";
 import MiniCarousel from "../../Components/MiniCarousel";
@@ -9,45 +8,75 @@ import NuevoNavBar from "../../Components/NuevoNavBar";
 import { Link } from "react-router-dom";
 import "./Home.css";
 
-import control from "../../assets/control.jpg";
-import cosas from "../../assets/cosas.jpg";
-import cartera from "../../assets/cartera.jpg";
-import avion from "../../assets/envioInternacional.jpg";
-import relojes from "../../assets/relojes.jpg";
-import juguetes from "../../assets/juguetes.jpg";
-import cama from "../../assets/ropa_cama.jpg";
-import almacenamiento from "../../assets/almacenamiento.jpg";
-import decoracion from "../../assets/decoracion.jpg";
-import limpieza from "../../assets/limpieza.jpg";
-import cremas from "../../assets/cremas.jpg";
-import mallas from "../../assets/mallas.jpg";
-import bolso from "../../assets/bolso.jpg";
-import sandalias from "../../assets/sandalias.jpg";
-import auricular from "../../assets/auricular.jpg";
-import termo from "../../assets/termo.jpg";
-import parlante from "../../assets/parlante.jpg";
+import osoPeluche from "../../assets/juguetes.jpg";
+import auriculares from "../../assets/auricularesBeats.jpg";
+import cafeteraExpres from "../../assets/CafeteraExpress.jpg";
+import camisetaNike from "../../assets/camisetaNike.jpg";
+import libroDaVinci from "../../assets/libroCodigoDaVinci.jpg";
+import mochilaUrbana from "../../assets/MochilaUrbana.jpg";
+import monitorCurvo from "../../assets/monitorCurvo.jpg";
+import sillaGamer from "../../assets/SillaGamerErgonomica.jpg";
+import smartWatch from "../../assets/SmartwatchDeportivoGPS.jpg";
+import tecladoRGB from "../../assets/tecladoRGB.jpg";
+import zapatillasRunning from "../../assets/zapatillasRunning.jpg";
+import sneakers from "../../assets/sneakersMujer.jpg";
+import pumaDeportivas from "../../assets/PumaDeportivas.jpg";
+import underArmor from "../../assets/UnderArmor.jpg";
+import bolsoCalvin from "../../assets/bolsoCalvin.jpg";
+import bolsoTote from "../../assets/bolsoTote.jpg";
+import mochilaRosa from "../../assets/mochilaRosa.jpg";
+import camisaLino from "../../assets/camisaLino.jpg";
+import camisaVestir from "../../assets/camisaVestir.jpg";
+import camisaSinMangasMujer from "../../assets/camisetaSinMangaMujer.jpg";
+import lampara from "../../assets/Lampara.jpg";
+import soporteEsponja from "../../assets/SoporteEsponja.jpg";
+import librosGot from "../../assets/LibrosGot.jpg";
+import libroFrankenstein from "../../assets/libroFrankenstein.jpg";
+import libroDb from "../../assets/libroDb.jpg";
+import legoStarWars from "../../assets/legoStarWars.jpg";
+import optimusPrime from "../../assets/optimusPrime.jpg";
+import batman from "../../assets/batman.jpg";
+
 
 const Home = () => {
     const [sortOrder, setSortOrder] = useState("asc"); // "asc" o "desc"
     const [categoryFilter, setCategoryFilter] = useState(""); // "" para todas
 
     const products = [
-        { id: 1, image: control, title: "a", description: "Compra videojuegos", category: "electronicos" },
-        { id: 2, image: avion, title: "b", description: "Haz click aqui para verificar la idoneidad", category: "electronicos" },
-        { id: 3, image: cartera, title: "c", description: "Ver más", category: "para el hogar" },
-        { id: 4, image: limpieza, title: "d", description: "Descubre más", category: "para el hogar" },
-        { id: 5, image: cosas, title: "e", description: "Comprar ahora", category: "electronicos" },
-        { id: 6, image: sandalias, title: "f", description: "Comprar mas", category: "vacacionar" },
-        { id: 7, image: juguetes, title: "g", description: "Mas detalles", category: "vacacionar" },
-        { id: 8, image: relojes, title: "h", description: "Mas detalles", category: "electronicos" },
-        { id: 9, image: cama, title: "i", description: "Ver más detalles", category: "para el hogar" },
-        { id: 10, image: almacenamiento, title: "j", description: "Compra ahora", category: "electronicos" },
-        { id: 11, image: decoracion, title: "k", description: "Ver más", category: "para el hogar" },
-        { id: 12, image: cremas, title: "l", description: "Compra ahora", category: "belleza" },
-        { id: 13, image: mallas, title: "m", description: "Ver más detalles", category: "vacacionar" },
-        { id: 14, image: bolso, title: "n", description: "Descubre más", category: "belleza" },
-        { id: 15, image: auricular, title: "o", description: "Compra ahora", category: "electronicos" },
-        { id: 16, image: termo, title: "p", description: "Ver más", category: "vacacionar" },
+        { id: 1, image: auriculares, title: "Auriculares", description: "Compra videojuegos", category: "electronicos" },
+        { id: 2, image: monitorCurvo, title: "Monitor curvo", description: "Haz click aqui para verificar la idoneidad", category: "electronicos" },
+        { id: 3, image: tecladoRGB, title: "Teclado RGB", description: "Ver más", category: "electronicos" },
+        { id: 4, image: smartWatch, title: "Smartwatch", description: "Descubre más", category: "electronicos" },
+
+        { id: 5, image: zapatillasRunning, title: "Zapatillas de running", description: "Comprar ahora", category: "zapatillas" },
+        { id: 17, image: sneakers, title: "Zapatillas de mujer", description: "Comprar ahora", category: "zapatillas" },
+        { id: 18, image: pumaDeportivas, title: "Puma deportivas", description: "Comprar ahora", category: "zapatillas" },
+        { id: 19, image: underArmor, title: "Under Armor", description: "Comprar ahora", category: "zapatillas" },
+
+        { id: 6, image: camisetaNike, title: "Camiseta Nike", description: "Comprar mas", category: "ropa" },
+        { id: 20, image: camisaLino, title: "Camisa de lino", description: "Comprar mas", category: "ropa" },
+        {id: 21, image: camisaVestir, title: "Camisa de vestir", description: "Comprar mas", category: "ropa" },
+        { id: 22, image: camisaSinMangasMujer, title: "Camisa sin mangas", description: "Comprar mas", category: "ropa" },
+
+        { id: 7, image: libroDaVinci, title: "Libro DaVinci", description: "Mas detalles", category: "libros" },
+        { id: 12, image: libroFrankenstein, title: "Libro Frankenstein", description: "Mas detalles", category: "libros" },
+        { id: 13, image: libroDb, title: "Libro Dragon Ball", description: "Mas detalles", category: "libros" },
+        { id: 14, image: librosGot, title: "Libro Game of Thrones", description: "Mas detalles", category: "libros" },
+
+        { id: 8, image: osoPeluche, title: "Oso de peluche", description: "Mas detalles", category: "juguetes" },
+        { id: 15, image: legoStarWars, title: "Lego Star Wars", description: "Mas detalles", category: "juguetes" },
+        { id: 16, image: optimusPrime, title: "Optimus Prime", description: "Mas detalles", category: "juguetes" },
+        { id: 23, image: batman, title: "Batman", description: "Mas detalles", category: "juguetes" },
+
+        { id: 9, image: mochilaUrbana, title: "Mochila Urbana", description: "Ver más detalles", category: "mochilas" },
+        { id: 24, image: bolsoCalvin, title: "Bolso Calvin Klein", description: "Ver más detalles", category: "mochilas" },
+        { id: 25, image: bolsoTote, title: "Bolso Tote", description: "Ver más detalles", category: "mochilas" },
+        { id: 26, image: mochilaRosa, title: "Mochila Rosa", description: "Ver más detalles", category: "mochilas" },
+
+        { id: 10, image: sillaGamer, title: "Silla Ergonomica", description: "Compra ahora", category: "para el hogar" },
+        { id: 27, image: lampara, title: "Lampara", description: "Compra ahora", category: "para el hogar" },
+        { id: 29, image: soporteEsponja, title: "Soporte para esponja", description: "Compra ahora", category: "para el hogar" },
+        { id: 30, image: cafeteraExpres, title: "Cafetera Express", description: "Compra ahora", category: "para el hogar" },
     ];
 
     // Filtrado y ordenamiento combinados
