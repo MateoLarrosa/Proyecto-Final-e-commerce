@@ -3,8 +3,12 @@ import { AppBar, Toolbar, Typography, IconButton, InputBase, Box, Button} from '
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
+import { useNavigate } from 'react-router-dom';
+
+
 
 export default function NuevoNavBar() {
+    const navigate = useNavigate();
     return(
         <AppBar 
             position="sticky"
@@ -51,11 +55,15 @@ export default function NuevoNavBar() {
                     flexDirection:'row',
                     justifyContent:'center'
                 }}>
-                    <IconButton sx={{ color: 'white', bgcolor:'#131921 !important' }}>
+                    <IconButton sx={{ color: 'white', bgcolor:'#131921 !important' }}
+                        onClick={() => navigate('/mi-carrito')} // Cambia la ruta según sea necesario
+                    >
                         <ShoppingCartIcon />
                     </IconButton>
 
-                    <IconButton sx={{ color: 'white', bgcolor:'#131921 !important' }}>
+                    <IconButton sx={{ color: 'white', bgcolor:'#131921 !important' }}
+                        onClick={() => navigate('/mi-perfil')} // Cambia la ruta según sea necesario
+                        >
                         <PersonIcon />
                     </IconButton>
                 </Box>

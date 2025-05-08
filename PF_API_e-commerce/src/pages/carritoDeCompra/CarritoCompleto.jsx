@@ -4,7 +4,7 @@ import ResumenCarrito from './ResumenCarrito';
 import crocsImg from '../../assets/crocs.jpg';
 import zapatillasImg from '../../assets/slidesNike.jpg';
 import styles from '../carritoDeCompra/carritoCompletoStyles.module.css';
-import { NavBar } from '../../Components/NavBar';
+import  NavBar  from '../../Components/NavBar';
 import Footer from '../../Components/Footer';
 
 
