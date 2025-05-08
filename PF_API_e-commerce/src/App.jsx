@@ -8,6 +8,7 @@ import viteLogo from '/vite.svg';
 import './App.css';
 import Login from './pages/pantallaDeInicio/Login';
 import Home from './pages/pantallaDeInicio/Home';
+import ProductDetail from './pages/pantallaDeInicio/ProductDetail';
 // import UserMockup from './components/UserMockup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

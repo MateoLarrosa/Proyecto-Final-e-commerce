@@ -1,0 +1,36 @@
+.mini-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.mini-carousel .carousel-track {
+    display: flex;
+    gap: 16px; /* espacio entre imágenes */
+    overflow: hidden;
+    width: 80%;
+}
+
+.mini-carousel .carousel-image {
+    height: 180px;
+    width: auto;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.mini-carousel .carousel-button {
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.mini-carousel .carousel-button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}

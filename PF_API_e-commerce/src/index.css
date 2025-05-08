@@ -59,7 +59,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  /* background-color: #1a1a1a; */
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -97,3 +97,4 @@ button:focus-visible {
       background-color: #f0f2f2; /* Fondo gris claro para el área de contenido */
   }
   
+}}
