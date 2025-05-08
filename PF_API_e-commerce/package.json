@@ -17,6 +17,7 @@
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.2",
     "bootstrap": "^5.3.5",
+    "embla-carousel-react": "^8.6.0",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",

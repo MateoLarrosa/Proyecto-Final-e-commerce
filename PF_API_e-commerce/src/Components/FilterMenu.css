@@ -1,0 +1,27 @@
+.filter-menu {
+    display: flex;
+    align-items: flex-start; /* Alineación de los elementos al principio */
+    justify-content: flex-start; /* Alineación a la izquierda */
+    margin: 20px auto;
+    background-color: #f2f2f2;
+    width: 80%;
+    border-radius: 5px;
+    gap: 20px; /* Espacio entre los dropdowns */
+}
+
+.filter-menu > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-menu select {
+    padding: 6px 10px;
+    font-size: 13px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #131921;
+    cursor: pointer;
+}
+
+

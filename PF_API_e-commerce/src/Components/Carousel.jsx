@@ -1,57 +1,34 @@
-import React from 'react';
-import Carousel from 'react-bootstrap/Carousel';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState } from "react";
+import AvionAmazon from "../assets/AvionAmazon.jpg";
+import AmazonDiaMadre from "../assets/AmazonDiaMadre.jpg";
+import AmazonJuguetes from "../assets/AmazonJuguetes.jpg";
+import "./Carousel.css";
 
-// Importación de imágenes locales
-import AvionAmazon from '../assets/AvionAmazon.jpg';
-import AmazonDiaMadre from '../assets/AmazonDiaMadre.jpg';
-import AmazonJuguetes from '../assets/AmazonJuguetes.jpg';
+const Carousel = () => {
+    const images = [AvionAmazon, AmazonDiaMadre, AmazonJuguetes];
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-const Carrusel = () => {
-    
+    const nextImage = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    };
+
+    const prevImage = () => {
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+    };
 
     return (
-        <Carousel fade className="w-100"  style={{ height: "390px" }}>
-            <Carousel.Item>
+        <div className="carousel-container">
+            <div className="carousel">
+                <button className="arrow left" onClick={prevImage}>❮</button>
                 <img
-                    className="d-block w-100"
-                    src={AvionAmazon}
-                    alt="Avión Amazon"
-                    style={{ objectFit: "cover", height: "400px" }}
+                    src={images[currentIndex]}
+                    alt={`Slide ${currentIndex + 1}`}
+                    className="carousel-image"
                 />
-                <Carousel.Caption className="text-dark">
-                    <h3>Envíos Rápidos</h3>
-                    <p>Con Amazon podés recibir tu pedido en tiempo récord.</p>
-                </Carousel.Caption>
-            </Carousel.Item>
-
-            <Carousel.Item>
-                <img
-                    className="d-block w-100"
-                    src={AmazonDiaMadre}
-                    alt="Día de la Madre"
-                    style={{ objectFit: "cover", height: "400px" }}
-                />
-                <Carousel.Caption className="text-dark">
-                    <h3>Día de la Madre</h3>
-                    <p>Regalá algo especial con nuestras ofertas únicas.</p>
-                </Carousel.Caption>
-            </Carousel.Item>
-
-            <Carousel.Item>
-                <img
-                    className="d-block w-100"
-                    src={AmazonJuguetes}
-                    alt="Juguetes"
-                    style={{ objectFit: "cover", height: "400px" }}
-                />
-                <Carousel.Caption className="text-dark">
-                    <h3>Juguetes para todos</h3>
-                    <p>Diversión asegurada para los más pequeños.</p>
-                </Carousel.Caption>
-            </Carousel.Item>
-        </Carousel>
+                <button className="arrow right" onClick={nextImage}>❯</button>
+            </div>
+        </div>
     );
 };
 
-export default Carrusel;
+export default Carousel;

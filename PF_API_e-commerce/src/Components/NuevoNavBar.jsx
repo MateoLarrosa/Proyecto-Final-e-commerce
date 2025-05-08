@@ -78,7 +78,7 @@ export default function NuevoNavBar() {
                 <Button variant='text' sx={{color:'white',bgcolor:'#232F3E !important'}}>Ofertas</Button>
                 <Button variant='text' sx={{color:'white',bgcolor:'#232F3E !important'}}>Tendencias</Button>
                 <Button variant='text' sx={{color:'white',bgcolor:'#232F3E !important'}}>Novedades</Button>
-                <Button variant='text' sx={{color:'white',bgcolor:'#232F3E !important'}}>Más vendidos</Button>
+                <Button variant='text' sx={{color:'white',bgcolor:'#232F3E !important'}}>Mas vendidos</Button>
 
             </Toolbar>
         </AppBar>
