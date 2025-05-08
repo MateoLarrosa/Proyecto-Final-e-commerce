@@ -11,6 +11,15 @@
       "name": "Ana Gómez",
       "email": "ana@example.com",
       "role": "Cliente"
+    },
+    {
+      "id": "8d74",
+      "username": "adolfitwo",
+      "email": "adolfo@mail.com",
+      "password": "adolfito",
+      "nombre": "Adolf",
+      "apellido": "Garcia",
+      "role": "Cliente"
     }
   ],
   "productos": [

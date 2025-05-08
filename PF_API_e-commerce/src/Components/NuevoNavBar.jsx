@@ -7,6 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 export default function NuevoNavBar() {
     const navigate = useNavigate();
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+    const handleLogout = () => {
+        localStorage.removeItem('isLoggedIn');
+        navigate('/login-user');
+    };
+
     return(
         <AppBar 
             position="sticky"
@@ -20,9 +27,19 @@ export default function NuevoNavBar() {
                 justifyContent:'space-between',
                 alignItems:'center'
             }}>
-                <Typography variant="h4" sx={{fontWeight:'700'}}>
+                <Button
+                    onClick={() => navigate('/home')}
+                    sx={{
+                        color: 'white',
+                        fontSize: '2rem',
+                        fontWeight: '700',
+                        textTransform: 'none',
+                        '&:hover': { background: 'transparent', color: '#FEBD69' }
+                    }}
+                    disableRipple
+                >
                     Amazonas
-                </Typography>
+                </Button>
 
                 <Box sx={{
                     display: 'flex',
@@ -59,10 +76,25 @@ export default function NuevoNavBar() {
                         <ShoppingCartIcon />
                     </IconButton>
 
-                    <IconButton sx={{ color: 'white', bgcolor:'#131921 !important' }} onClick={() => navigate('/mi-perfil')}>
-
+                    <IconButton
+                        sx={{ color: 'white', bgcolor: '#131921 !important' }}
+                        onClick={() => {
+                            if (isLoggedIn) {
+                                navigate('/mi-perfil');
+                            } else {
+                                navigate('/login-user');
+                            }
+                        }}>
                         <PersonIcon />
                     </IconButton>
+                    {isLoggedIn && (
+                        <Button
+                            onClick={handleLogout}
+                            sx={{ color: 'white', ml: 2, textTransform: 'none' }}
+                        >
+                            Logout
+                        </Button>
+                    )}
                 </Box>
             </Toolbar>
 
