@@ -1,26 +1,27 @@
 // FilterMenu.jsx
 import React from 'react';
-import './FilterMenu.css'; // Asegúrate de importar el archivo CSS
+import './FilterMenu.css';
 
-const FilterMenu = ({ onCategoryChange, onOrderChange }) => {
+// Recibe 'categories' y 'currentCategory' como props
+const FilterMenu = ({ onCategoryChange, onOrderChange, categories = [], currentCategory }) => {
     return (
         <div className="filter-menu">
             <div>
-                <select onChange={(e) => onCategoryChange(e.target.value)}>
-                    <option value="">Todos</option>
-                    <option value="electronicos">Electrónicos</option>
-                    <option value="zapatillas">Zapatillas</option>
-                    <option value="ropa">Ropa</option>
-                    <option value="libros">Libros</option>
-                    <option value="juguetes">Juguetes</option>
-                    <option value="para el hogar">Para el hogar</option>
-                    <option value="mochilas">Mochilas/Bolsos</option>
-
+                {/* El valor del select ahora está controlado por 'currentCategory' */}
+                <select onChange={(e) => onCategoryChange(e.target.value)} value={currentCategory}>
+                    <option value="">Todas las categorías</option> {/* Cambiado "Todos" a "Todas las categorías" para claridad */}
+                    {/* Generar opciones dinámicamente */}
+                    {categories.map((category) => (
+                        <option key={category} value={category}>
+                            {category} {/* Muestra el nombre de la categoría tal como viene */}
+                        </option>
+                    ))}
                 </select>
             </div>
 
             <div>
-                <select onChange={(e) => onOrderChange(e.target.value)}>
+                {/* Asumimos que el dropdown de orden ya funcionaba bien */}
+                <select onChange={(e) => onOrderChange(e.target.value)} defaultValue="asc">
                     <option value="asc">A-Z</option>
                     <option value="desc">Z-A</option>
                 </select>

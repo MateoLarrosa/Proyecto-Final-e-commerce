@@ -20,10 +20,8 @@
     font-size: 13px;
     border-radius: 6px;
     border: 1px solid #ccc;
-    background-color: white;
+    background-color: #131921;
     cursor: pointer;
 }
 
-.filter-menu select:hover {
-    background-color: #e0e0e0;
-}
+
