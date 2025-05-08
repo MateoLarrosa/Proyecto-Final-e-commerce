@@ -19,8 +19,8 @@ function MiPerfilApp() {
         <div className={styles.cardContainer}>
           <Card nombreImagen="packageSearch.png" titulo="Gestion de Productos" cuerpo="Administrá tu catálogo de productos" onClick={() => navigate('/gestion-de-productos')}/>
           <Card nombreImagen="spiralNotepad.png" titulo="Tus Direcciones" cuerpo="Edita o borra tus direcciones para tus futuros envíos"/>
-          <Card nombreImagen="securityShield.png" titulo="Login & Seguridad" cuerpo="Edita tus credenciales como nombre, email o teléfono"/>
-          <Card nombreImagen="customerService.png" titulo="Customer Service" cuerpo="Contacta con nosotros si necesitas ayuda"/>
+          <Card nombreImagen="securityShield.png" titulo="Login & Seguridad" cuerpo="Edita tus credenciales como nombre,email o telefono" onClick={() => navigate('/mi-perfil/login-seguridad')}/>
+          <Card nombreImagen="customerService.png" titulo="Customer Service" cuerpo="Contacta con nosotros si necesitas ayuda" onClick={() => navigate('/mi-perfil/customer-service')}/>
         </div>
       </div>
       <Footer />
