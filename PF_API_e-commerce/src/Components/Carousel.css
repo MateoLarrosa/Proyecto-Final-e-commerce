@@ -2,12 +2,16 @@
     width: 80%;
     margin: 20px auto; /* Alinea con .informacion y cards */
     position: relative;
+    overflow: hidden;
 }
 
 .carousel {
     position: relative;
     width: 100%;
-    height: 350px; /* Ajusta a gusto */
+    height: 350px; /* Ajusta según el tamaño deseado */
+    display: flex;
+    align-items: center; /* Centra verticalmente las imágenes */
+    justify-content: center; /* Centra horizontalmente las imágenes */
     overflow: hidden;
     border-radius: 10px;
 }
@@ -15,9 +19,10 @@
 .carousel-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center center; /* Centrado total */
+    object-fit: cover; /* Asegura que la imagen se ajuste sin deformarse */
+    object-position: top; /* Centra la imagen */
     display: block;
+    border-radius: 10px; /* Opcional: bordes redondeados */
 }
 
 
