@@ -12,7 +12,6 @@ function MiPerfilApp() {
     <>
       <NuevoNavBar />
       <div className={styles.appContainer}>
-        
         <div className={styles.appContainerTitle}>
           <h1>Tu Cuenta</h1>
         </div>

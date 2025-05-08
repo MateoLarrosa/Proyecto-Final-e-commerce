@@ -4,8 +4,8 @@ import ResumenCarrito from './ResumenCarrito';
 import crocsImg from '../../assets/crocs.jpg';
 import zapatillasImg from '../../assets/slidesNike.jpg';
 import styles from '../carritoDeCompra/carritoCompletoStyles.module.css';
-import NavBar  from '../../Components/NavBar';
-import Footer from '../../Components/Footer';
+import NuevoNavBar  from '../../Components/NuevoNavBar.jsx';
+import Footer from '../../Components/Footer.jsx';
 
 
 
@@ -31,26 +31,29 @@ const CarritoCompleto = () => {
 
   return (
 
-  
-    <div className={styles.carritoPage}>
-      <NavBar></NavBar>
-      <h1>Tu Carrito</h1>
-
-        <div className={styles.container}>
-            <div className={styles.productosList}>
-                {productos.map(p => (
-                <Producto
-                key={p.id}
-                 producto={p} // Prop 1: Datos del producto
-                onSubtotalChange={handleSubtotalChange} // Prop 2: Callback
-                />
-                ))}
+    <>
+      <NuevoNavBar/>
+      <div className={styles.carritoPage}>
         
-            </div>
-            <ResumenCarrito total={total} />
+        <h1>Tu Carrito</h1>
+
+          <div className={styles.container}>
+              <div className={styles.productosList}>
+                  {productos.map(p => (
+                  <Producto
+                  key={p.id}
+                  producto={p} // Prop 1: Datos del producto
+                  onSubtotalChange={handleSubtotalChange} // Prop 2: Callback
+                  />
+                  ))}
+          
+              </div>
+              <ResumenCarrito total={total} />
+        </div>
+        <Footer></Footer>
       </div>
-      <Footer></Footer>
-    </div>
+    </>
+  
   );
 };
 

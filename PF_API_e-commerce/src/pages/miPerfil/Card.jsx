@@ -1,8 +1,7 @@
-// import './cardStyles.css'
 import styles from './cardStyles.module.css'
 
 
-function Card({nombreImagen,titulo,cuerpo,onClick}) {
+function Card({nombreImagen,titulo,cuerpo, onClick}) {
     
     const imagePath = new URL(`../../assets/${nombreImagen}`, import.meta.url).href;
     
