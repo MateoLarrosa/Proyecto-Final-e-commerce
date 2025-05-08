@@ -1,6 +1,6 @@
 import React from "react";
 import Footer from "../../Components/Footer"
-import NavBar from "../../Components/NavBar"
+
 import NuevoNavBar from "../../Components/NuevoNavBar";
 import  Carousel  from "../../Components/Carousel"; 
 
