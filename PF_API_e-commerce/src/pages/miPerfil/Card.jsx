@@ -1,13 +1,12 @@
-// import './cardStyles.css'
 import styles from './cardStyles.module.css'
 
 
-function Card({nombreImagen,titulo,cuerpo}) {
+function Card({nombreImagen,titulo,cuerpo, onClick}) {
     
     const imagePath = new URL(`../../assets/${nombreImagen}`, import.meta.url).href;
     
     return(
-        <div className={styles.card}>
+        <div className={styles.card} onClick={onClick} style={{cursor: onClick ? 'pointer' : 'default'}}>
             <div>
                 <img className={styles.cardImage} src={imagePath} alt="Cardbox logo" />
             </div>
