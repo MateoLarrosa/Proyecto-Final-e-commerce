@@ -6,7 +6,6 @@ import App from './App.jsx';
 import Home from './pages/pantallaDeInicio/Home.jsx';
 import Login from './pages/pantallaDeInicio/Login.jsx';
 import ProductDetails from './pages/pantallaDeInicio/ProductDetail.jsx';
-import UserManagement from './pages/UserManagement';
 import MiPerfilApp from './pages/miPerfil/MiPerfilApp.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
@@ -27,7 +26,6 @@ createRoot(document.getElementById('root')).render(
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
         <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/user-management" element={<UserManagement />} />
         <Route path="/mi-perfil" element={<MiPerfilApp />} />
         <Route path="/mi-carrito" element={<CarritoCompleto/>} />
         <Route path="/gestion-de-productos" element={<GestionProductos/>} />

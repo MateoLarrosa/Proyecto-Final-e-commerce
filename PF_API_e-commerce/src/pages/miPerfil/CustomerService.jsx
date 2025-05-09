@@ -49,7 +49,6 @@ const ContactForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validar()) {
-      // Aquí podrías enviar los datos por fetch o axios
       console.log('Formulario enviado:', form);
       alert('Gracias por tu mensaje. Lo revisaremos a la brevedad.');
       setForm({ nombre: '', email: '', pedido: '', tipo: '', mensaje: '' });
@@ -58,73 +57,86 @@ const ContactForm = () => {
   };
 
   return (
-    <>
-        <NuevoNavBar/>
-        <Paper elevation={3} sx={{ p: 4, maxWidth: 500, margin: 'auto' }}>
-        <Typography variant="h5" gutterBottom>
+    <Box sx={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      minHeight: '100vh',
+      bgcolor: 'white' 
+    }}>
+      <NuevoNavBar />
+      <Box sx={{ 
+        flex: 1, 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'flex-start',
+        p: 4
+      }}>
+        <Paper elevation={3} sx={{ p: 4, maxWidth: 500, width: '100%' }}>
+          <Typography variant="h5" gutterBottom>
             Formulario de contacto
-        </Typography>
-        <Typography variant="body2" gutterBottom>
+          </Typography>
+          <Typography variant="body2" gutterBottom>
             Si tuviste un problema con tu compra, por favor completá este formulario.
-        </Typography>
+          </Typography>
 
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
             <TextField
-            label="Nombre"
-            name="nombre"
-            value={form.nombre}
-            onChange={handleChange}
-            error={!!errores.nombre}
-            helperText={errores.nombre}
+              label="Nombre"
+              name="nombre"
+              value={form.nombre}
+              onChange={handleChange}
+              error={!!errores.nombre}
+              helperText={errores.nombre}
             />
             <TextField
-            label="Email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            error={!!errores.email}
-            helperText={errores.email}
+              label="Email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              error={!!errores.email}
+              helperText={errores.email}
             />
             <TextField
-            label="Número de pedido"
-            name="pedido"
-            value={form.pedido}
-            onChange={handleChange}
-            error={!!errores.pedido}
-            helperText={errores.pedido}
+              label="Número de pedido"
+              name="pedido"
+              value={form.pedido}
+              onChange={handleChange}
+              error={!!errores.pedido}
+              helperText={errores.pedido}
             />
             <TextField
-            label="Tipo de problema"
-            name="tipo"
-            select
-            value={form.tipo}
-            onChange={handleChange}
-            error={!!errores.tipo}
-            helperText={errores.tipo}
+              label="Tipo de problema"
+              name="tipo"
+              select
+              value={form.tipo}
+              onChange={handleChange}
+              error={!!errores.tipo}
+              helperText={errores.tipo}
             >
-            {tiposDeProblema.map((opcion) => (
+              {tiposDeProblema.map((opcion) => (
                 <MenuItem key={opcion} value={opcion}>
-                {opcion}
+                  {opcion}
                 </MenuItem>
-            ))}
+              ))}
             </TextField>
             <TextField
-            label="¿Qué ocurrió?"
-            name="mensaje"
-            multiline
-            minRows={4}
-            value={form.mensaje}
-            onChange={handleChange}
-            error={!!errores.mensaje}
-            helperText={errores.mensaje}
+              label="¿Qué ocurrió?"
+              name="mensaje"
+              multiline
+              minRows={4}
+              value={form.mensaje}
+              onChange={handleChange}
+              error={!!errores.mensaje}
+              helperText={errores.mensaje}
             />
             <Button variant="contained" color="primary" type="submit">
-            Enviar mensaje
+              Enviar mensaje
             </Button>
-        </Box>
+          </Box>
         </Paper>
-        <Footer/>
-    </>
+      </Box>
+      <Footer />
+    </Box>
   );
 };
 

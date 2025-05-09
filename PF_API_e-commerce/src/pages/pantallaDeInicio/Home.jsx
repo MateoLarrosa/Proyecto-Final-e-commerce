@@ -3,19 +3,29 @@ import React, { useState, useEffect, useCallback } from "react";
 import Footer from "../../Components/Footer";
 import Carousel from "../../Components/Carousel";
 import ProductCard from "../../Components/ProductCard";
-import FilterMenu from "../../Components/FilterMenu"; // Asegúrate que el nombre del archivo sea FilterMenu.jsx o .js
+import FilterMenu from "../../Components/FilterMenu";
 import NuevoNavBar from "../../Components/NuevoNavBar";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Home.css";
 
 const API_URL = "http://localhost:3001/productos";
 
 const Home = () => {
+    const location = useLocation();
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [sortOrder, setSortOrder] = useState("asc");
     const [categoryFilter, setCategoryFilter] = useState("");
+    const [searchQuery, setSearchQuery] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    // Leer el parámetro de búsqueda de la URL solo al montar el componente o cuando cambia la URL
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const searchFromUrl = params.get('search') || '';
+        setSearchQuery(searchFromUrl);
+    }, [location.search]);
 
     const fetchProducts = useCallback(async () => {
         setLoading(true);
@@ -31,15 +41,14 @@ const Home = () => {
                 id: prod.id,
                 title: prod.nombre,
                 price: prod.precio,
-                category: prod.categoria, // Este es el campo que usaremos para las categorías
+                category: prod.categoria,
                 image: prod.imagen,
                 description: prod.descripcion || prod.nombre,
                 stock: prod.stock
             }));
             setProducts(transformedData);
-
         } catch (err) {
-            setError(`Error al cargar productos: ${err.message}. Asegúrate de que json-server esté corriendo y las imágenes en public/assets.`);
+            setError(`Error al cargar productos: ${err.message}`);
             console.error(err);
         } finally {
             setLoading(false);
@@ -50,9 +59,15 @@ const Home = () => {
         fetchProducts();
     }, [fetchProducts]);
 
-    // Filtrado y ordenamiento
     const filteredAndSortedProducts = products
-        .filter((product) => categoryFilter === "" || product.category === categoryFilter)
+        .filter((product) => {
+            const matchesCategory = categoryFilter === "" || product.category === categoryFilter;
+            const matchesSearch = searchQuery === "" || 
+                product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                product.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                product.category.toLowerCase().includes(searchQuery.toLowerCase());
+            return matchesCategory && matchesSearch;
+        })
         .sort((a, b) => {
             if (a.title && b.title) {
                 return sortOrder === "asc"
@@ -62,19 +77,21 @@ const Home = () => {
             return 0;
         });
 
-    // *** NUEVO: Extraer categorías únicas de los productos ***
-    // Se ejecuta cada vez que 'products' cambia.
     const uniqueCategories = React.useMemo(() => {
         if (products.length > 0) {
-            // Usamos 'product.category' que ya está mapeado
             return Array.from(new Set(products.map(p => p.category))).filter(Boolean).sort();
         }
         return [];
     }, [products]);
 
+    // Manejar la búsqueda sin actualizar la URL directamente
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+    };
+
     return (
         <>
-            <NuevoNavBar />
+            <NuevoNavBar onSearch={handleSearch} />
             <div className="home-container">
                 <main className="main-content">
                     <Carousel />
@@ -84,28 +101,33 @@ const Home = () => {
                     Se requieren documentos de aduana adicionales para su destino. <a href="#">Haga click aquí para obtener más información</a>
                 </div>
 
-                {/* *** MODIFICADO: Pasar 'uniqueCategories' a FilterMenu *** */}
                 <FilterMenu
                     onCategoryChange={setCategoryFilter}
                     onOrderChange={setSortOrder}
                     categories={uniqueCategories}
-                    currentCategory={categoryFilter} // Para que el select muestre la categoría actual
+                    currentCategory={categoryFilter}
                 />
 
                 {loading && <p style={{ textAlign: "center" }}>Cargando productos...</p>}
                 {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
 
                 <div className="cards-section">
-                    {filteredAndSortedProducts.map((prod) => (
-                        <Link to={`/product/${prod.id}`} key={prod.id} className="product-card-link">
-                            <ProductCard
-                                image={prod.image}
-                                title={prod.title}
-                                description={prod.description}
-                                price={prod.price}
-                            />
-                        </Link>
-                    ))}
+                    {filteredAndSortedProducts.length > 0 ? (
+                        filteredAndSortedProducts.map((prod) => (
+                            <Link to={`/product/${prod.id}`} key={prod.id} className="product-card-link">
+                                <ProductCard
+                                    image={prod.image}
+                                    title={prod.title}
+                                    description={prod.description}
+                                    price={prod.price}
+                                />
+                            </Link>
+                        ))
+                    ) : (
+                        <p style={{ textAlign: "center", width: "100%", padding: "20px" }}>
+                            No se encontraron productos que coincidan con tu búsqueda.
+                        </p>
+                    )}
                 </div>
                 <Footer />
             </div>

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import NuevoNavBar from "../../Components/NuevoNavBar";
 import Footer from "../../Components/Footer";
+import { useNavigate } from "react-router-dom";
 
 const API_URL = "http://localhost:3001/users";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -36,6 +38,10 @@ const Register = () => {
     });
     setMsg("Usuario registrado correctamente.");
     setForm({ username: "", email: "", password: "", nombre: "", apellido: "", role: "Cliente" });
+    // Redireccionar a login después de 1.5 segundos
+    setTimeout(() => {
+      navigate("/login-user");
+    }, 1500);
   };
 
   return (
@@ -50,7 +56,7 @@ const Register = () => {
           <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required style={{ width: "100%", marginBottom: 16, padding: 10, borderRadius: 6, border: "1px solid #ccc" }} />
           <input name="password" type="password" placeholder="Contraseña" value={form.password} onChange={handleChange} required style={{ width: "100%", marginBottom: 16, padding: 10, borderRadius: 6, border: "1px solid #ccc" }} />
           <button type="submit" style={{ width: "100%", padding: 12, borderRadius: 6, background: "#232F3E", color: "#fff", fontWeight: "bold", border: "none" }}>Registrarse</button>
-          {msg && <div style={{ marginTop: 16, color: "red", textAlign: "center" }}>{msg}</div>}
+          {msg && <div style={{ marginTop: 16, color: msg.includes("correctamente") ? "green" : "red", textAlign: "center" }}>{msg}</div>}
         </form>
       </div>
       <Footer />

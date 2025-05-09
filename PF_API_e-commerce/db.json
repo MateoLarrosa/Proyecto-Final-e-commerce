@@ -20,7 +20,26 @@
       "nombre": "Adolf",
       "apellido": "Garcia",
       "role": "Cliente"
+    },
+    {
+      "id": "2730",
+      "username": "MateoPrueba001",
+      "email": "mateo@prueba.com",
+      "password": "12345",
+      "nombre": "Mateo",
+      "apellido": "Larrosa",
+      "role": "Cliente"
+    },
+    {
+      "id": "df2a",
+      "username": "AugustoPrueba02",
+      "email": "augusto@prueba.com",
+      "password": "121212",
+      "nombre": "Augusto",
+      "apellido": "Peralta",
+      "role": "Cliente"
     }
+   
   ],
   "productos": [
     {
@@ -35,7 +54,7 @@
       "id": "2",
       "nombre": "Auriculares",
       "precio": 3500,
-      "stock": 20,
+      "stock": 17,
       "categoria": "Electrónica",
       "imagen": "/assets/auricularesBeats.jpg"
     },
@@ -46,14 +65,6 @@
       "stock": 100,
       "categoria": "Calzado",
       "imagen": "/assets/zapatillasRunning.jpg"
-    },
-    {
-      "id": "4",
-      "nombre": "Teclado Mecánico ",
-      "precio": 4200.75,
-      "stock": 15,
-      "categoria": "Electrónica",
-      "imagen": "/assets/tecladoRGB.jpg"
     },
     {
       "id": "5",

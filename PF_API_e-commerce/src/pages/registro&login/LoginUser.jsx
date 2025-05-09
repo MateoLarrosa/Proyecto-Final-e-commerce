@@ -21,7 +21,7 @@ const LoginUser = () => {
     if (users.length === 1) {
       setMsg("Login exitoso. ¡Bienvenido!");
       localStorage.setItem('isLoggedIn', 'true');
-      navigate("/mi-perfil");
+      navigate("/home");
     } else {
       setMsg("Email o contraseña incorrectos.");
     }

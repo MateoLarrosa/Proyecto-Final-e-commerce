@@ -7,6 +7,7 @@ import andres1 from '../../assets/andres1.jpg'
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 import NuevoNavBar from '../../Components/NuevoNavBar';
+import Footer from '../../Components/Footer';
 
 const LOCAL_STORAGE_KEY = 'infoLoginYSeguridadForm';
 
@@ -274,9 +275,9 @@ const InfoLoginYSeguridad = () => {
 
                     </Box>
                 </Box>
-                
             </Box>
         </Container>
+        <Footer />
     </>
   )
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import gestionProductos from './pages/gestionProductos/GestionProductos';
-import Catalogo from './pages/Catalogo';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
@@ -11,6 +10,7 @@ import Home from './pages/pantallaDeInicio/Home';
 import ProductDetail from './pages/pantallaDeInicio/ProductDetail';
 // import UserMockup from './components/UserMockup';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const theme = createTheme({
   palette: {
