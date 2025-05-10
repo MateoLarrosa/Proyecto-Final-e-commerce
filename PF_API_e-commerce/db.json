@@ -38,8 +38,16 @@
       "nombre": "Augusto",
       "apellido": "Peralta",
       "role": "Cliente"
+    },
+    {
+      "id": "a86f",
+      "username": "and111",
+      "email": "hola@correo",
+      "password": "123",
+      "nombre": "andres",
+      "apellido": "mendez",
+      "role": "Cliente"
     }
-   
   ],
   "productos": [
     {
