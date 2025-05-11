@@ -22,12 +22,27 @@ const InfoLoginYSeguridad = () => {
         telefono: ''
     });
 
+    const [user,setUser] = useState({nombre: "", apellido: "", email: ""});
+
     
     useEffect(() => {
-        const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-        if (saved) {
-            setFormData(JSON.parse(saved));
+        const userData = JSON.parse(localStorage.getItem("user"));
+        if (userData){
+            setUser(userData);
+            setFormData({
+                nombre: userData.nombre || "",
+                apellido: userData.apellido || "",
+                edad: userData.edad || "",
+                email: userData.email || "",
+                indicativo: userData.indicativo || "",
+                telefono: userData.telefono || ""
+            })
         }
+
+        // const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+        // if (saved) {
+        //     setFormData(JSON.parse(saved));
+        // }
     }, []);
 
     
@@ -37,10 +52,44 @@ const InfoLoginYSeguridad = () => {
     };
 
     
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(formData));
-        alert('¡Información Guardada!')
+
+        // Traigo la informacion del usuario que se logueó...
+        const userData = JSON.parse(localStorage.getItem("user"));
+        
+        // Valido que la info no esté vacía o que no tenga id...
+        if (!userData || !userData.id) {
+            alert("No se encontró el usuario autenticado");
+            return;
+        }
+
+        // Preparo el objeto con los datos a actualizar...
+        const updatedUser = {
+            nombre: formData.nombre,
+            apellido: formData.apellido,
+            email: formData.email,
+            edad: formData.edad,
+            telefono: formData.telefono,
+            indicativo: formData.indicativo
+        }
+
+        // Ejecuto la peticion PATCH para actualizar los datos...
+        const res = await fetch(`http://localhost:3001/users/${userData.id}`,{
+            method: "PATCH",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify(updatedUser)
+        });
+
+        // Verifico que los datos se cargaron correctamente...
+        if (res.ok) {
+            alert("¡Información guardada correctamente!");
+
+            // Actualizo el localStorage con los nuevos datos...
+            const newUser = {...userData, ...updatedUser}
+            localStorage.setItem("user", JSON.stringify(newUser))
+
+        } else {alert("Error al guardar la información")}
     }
 
     const handleClear = () => {

@@ -27,6 +27,10 @@ export default function NuevoNavBar({ onSearch }) {
 
     const handleLogout = () => {
         localStorage.removeItem('isLoggedIn');
+
+        // Quito la info del usuario del localStorage al cerrar sesión...
+        localStorage.removeItem('user');
+        
         navigate('/login-user');
     };
 

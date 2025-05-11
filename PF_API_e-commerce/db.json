@@ -46,7 +46,10 @@
       "password": "123",
       "nombre": "andres",
       "apellido": "mendez",
-      "role": "Cliente"
+      "role": "Cliente",
+      "edad": "28",
+      "telefono": "12345678",
+      "indicativo": "54"
     }
   ],
   "productos": [

@@ -21,6 +21,10 @@ const LoginUser = () => {
     if (users.length === 1) {
       setMsg("Login exitoso. ¡Bienvenido!");
       localStorage.setItem('isLoggedIn', 'true');
+
+      // Guardo la info del usuario para recuperarla en InfoLoginYSeguridad...
+      localStorage.setItem('user', JSON.stringify(users[0]));
+
       navigate("/home");
     } else {
       setMsg("Email o contraseña incorrectos.");
