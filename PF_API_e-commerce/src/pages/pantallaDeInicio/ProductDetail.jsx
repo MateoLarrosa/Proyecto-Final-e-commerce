@@ -11,6 +11,10 @@ const ProductDetails = () => {
     const [isAdmin, setIsAdmin] = useState(false); // Considera cómo determinar esto realmente
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [cart, setCart] = useState(() => {
+        const stored = localStorage.getItem('cart');
+        return stored ? JSON.parse(stored) : [];
+    });
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -59,7 +63,32 @@ const ProductDetails = () => {
     }, [id]);
 
     const addToCart = () => {
-        alert("Producto agregado al carrito.");
+        // Evita duplicados, suma cantidad si ya existe
+        setCart(prev => {
+            const found = prev.find(p => p.id === product.id);
+            let updated;
+            const cantidadActual = found ? (found.cantidad || 1) : 0;
+            if (cantidadActual + 1 > product.stock) {
+                alert("No puedes agregar más unidades de este producto. Stock máximo alcanzado.");
+                return prev;
+            }
+            if (found) {
+                updated = prev.map(p =>
+                    p.id === product.id ? { ...p, cantidad: (p.cantidad || 1) + 1 } : p
+                );
+            } else {
+                updated = [...prev, { ...product, cantidad: 1 }];
+            }
+            localStorage.setItem('cart', JSON.stringify(updated));
+            return updated;
+        });
+        // Solo navegar si realmente se agregó
+        const found = cart.find(p => p.id === product.id);
+        const cantidadActual = found ? (found.cantidad || 1) : 0;
+        if (cantidadActual < product.stock) {
+            alert("Producto agregado al carrito.");
+            navigate('/mi-carrito');
+        }
     };
 
     const addStock = () => {
