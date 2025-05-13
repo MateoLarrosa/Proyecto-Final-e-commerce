@@ -26,18 +26,30 @@
     outline: none;
   }
 
-  .cartContainer{
+  .cartContainer {
     display: flex;
     flex-direction: row;
     font-family: 'Open Sans', sans-serif;
     gap: 30px;
-    margin-left: 70px;
+    margin-left: 0px;
+    width: 365px;
+    /* Centrar imagen y detalles verticalmente */
+    align-items: center;
+    margin-bottom: 20px;
   }
 
-  .divImg img{
-    height: 200px;
-
-  }
-  .divImg{
+  .divImg {
     padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+  }
+
+  .divImg img {
+    height: 100px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
   }

@@ -38,8 +38,16 @@
       "nombre": "Augusto",
       "apellido": "Peralta",
       "role": "Cliente"
+    },
+    {
+      "id": "2060",
+      "username": "lester",
+      "email": "lestergildiaz@gmail.com",
+      "password": "777",
+      "nombre": "lester",
+      "apellido": "gil",
+      "role": "Cliente"
     }
-   
   ],
   "productos": [
     {
