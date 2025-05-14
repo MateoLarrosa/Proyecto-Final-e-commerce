@@ -38,29 +38,8 @@
       "nombre": "Augusto",
       "apellido": "Peralta",
       "role": "Cliente"
-    },
-    {
-
-      "id": "a86f",
-      "username": "and111",
-      "email": "hola@correo",
-      "password": "123",
-      "nombre": "andres",
-      "apellido": "mendez",
-      "role": "Cliente",
-      "edad": "28",
-      "telefono": "12345678",
-      "indicativo": "54"
-
-      "id": "2060",
-      "username": "lester",
-      "email": "lestergildiaz@gmail.com",
-      "password": "777",
-      "nombre": "lester",
-      "apellido": "gil",
-      "role": "Cliente"
-
     }
+   
   ],
   "productos": [
     {
