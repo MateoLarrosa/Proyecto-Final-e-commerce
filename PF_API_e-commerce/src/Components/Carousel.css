@@ -1,0 +1,53 @@
+.carousel-container {
+    width: 80%;
+    margin: 20px auto; /* Alinea con .informacion y cards */
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 350px; /* Ajusta según el tamaño deseado */
+    display: flex;
+    align-items: center; /* Centra verticalmente las imágenes */
+    justify-content: center; /* Centra horizontalmente las imágenes */
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen se ajuste sin deformarse */
+    object-position: top; /* Centra la imagen */
+    display: block;
+    border-radius: 10px; /* Opcional: bordes redondeados */
+}
+
+
+/* Flechas */
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.7);
+    border: none;
+    font-size: 2rem;
+    padding: 5px 10px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.3s;
+}
+
+.arrow:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.left {
+    left: 10px;
+}
+
+.right {
+    right: 10px;
+}

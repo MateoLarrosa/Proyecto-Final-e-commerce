@@ -1,0 +1,112 @@
+/* pages/gestionProductosStyles.css */
+.gestionProductosContainer {
+  padding: 24px;
+  /* background-color: #f0f2f2; Ya está en global */
+  flex-grow: 1;
+  min-height: 100vh; 
+}
+
+ .gestionProductosPaper {
+     padding: 24px;
+     border-radius: 8px;
+     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+     background-color: white; /* Asegurar fondo blanco */
+ }
+
+.gestionProductosTitle {
+  color: #0F1111;
+  margin-bottom: 24px !important;
+  font-weight: 700;
+}
+
+.gestionProductosHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.addButton {
+    background-color: #28a745 !important; /* Verde */
+    color: white !important;
+}
+ .addButton:hover {
+     background-color: #218838 !important;
+ }
+
+.gestionProductosTableContainer {
+  border-radius: 8px;
+  overflow: hidden; /* Importante para que el borde redondeado funcione con la tabla */
+  border: 1px solid #E5E7EB; /* Añadir un borde sutil al contenedor */
+}
+
+.tableHeadCell {
+  background-color: #F3F4F6 !important; /* Usar !important si es necesario */
+  color: #1F2937 !important;
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid #E5E7EB !important;
+}
+
+.tableBodyCell {
+  vertical-align: middle;
+  border-bottom: 1px solid #E5E7EB !important;
+  font-size: 0.875rem; /* Tamaño de fuente estándar para celdas */
+}
+
+.tableRow:hover {
+    background-color: #FAFAFA !important;
+}
+
+.actionButton {
+  padding: 4px 8px !important;
+  font-size: 0.8rem !important;
+  min-width: auto !important;
+  margin: 0 4px !important;
+}
+
+.editButton {
+  background-color: #ff9900 !important; /* Naranja Amazon */
+  color: #000 !important;
+}
+ .editButton:hover {
+     background-color: #e68a00 !important;
+ }
+
+.deleteButton {
+  background-color: #d32f2f !important; /* Rojo Error */
+  color: white !important;
+}
+ .deleteButton:hover {
+     background-color: #c62828 !important;
+ }
+
+ /* Estilos para el Chip de Stock */
+ .stockChip {
+     font-size: 0.75rem !important;
+     height: 22px !important;
+     padding: 0 8px !important;
+     border-radius: 16px !important; /* Más redondeado */
+     font-weight: 500 !important;
+ }
+ .stockChip.high {
+     background-color: #D1FAE5 !important;
+     color: #065F46 !important;
+ }
+  .stockChip.medium {
+     background-color: #FEF3C7 !important;
+     color: #92400E !important;
+ }
+  .stockChip.low {
+     background-color: #FEE2E2 !important;
+     color: #991B1B !important;
+ }
+
+ /* Estilos para Paginación */
+  .tablePagination {
+      border-top: 1px solid #E5E7EB;
+      margin-top: 16px;
+      padding-top: 16px;
+  }

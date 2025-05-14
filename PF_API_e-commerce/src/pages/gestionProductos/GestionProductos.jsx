@@ -1,0 +1,284 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import {
+  Box, Typography, Button, Table, TableBody, TableCell,
+  TableContainer, TableHead, TableRow, Paper, TablePagination, Chip,
+  CircularProgress, Alert // Para feedback de carga y errores
+} from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import './gestionProductosStyles.css';
+import NuevoNavBar from '../../Components/NuevoNavBar'; // Asumo que este componente existe
+import Footer from '../../Components/Footer'; // Asumo que este componente existe
+import ProductoFormDialog from './ProductoFormDialog'; // Nuevo componente para el formulario
+
+// URL base de la API de json-server
+const API_URL = 'http://localhost:3001/productos';
+
+function GestionProductos() {
+  const [productos, setProductos] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  // Estado para el diálogo
+  const [openDialog, setOpenDialog] = useState(false);
+  const [productoActual, setProductoActual] = useState(null); // Para edición o nuevo producto
+  const [isEditMode, setIsEditMode] = useState(false);
+
+  // Función para obtener productos de la API
+  const fetchProductos = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`${API_URL}?_sort=nombre&_order=asc`); // Ordenar por nombre
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
+      }
+      const data = await response.json();
+      setProductos(data);
+    } catch (err) {
+      setError(`Error al cargar productos: ${err.message}. Asegúrate de que json-server esté corriendo.`);
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // Cargar productos al montar el componente
+  useEffect(() => {
+    fetchProductos();
+  }, [fetchProductos]);
+
+  // Manejadores de paginación
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  // Lógica para filas vacías y filas actuales (sin cambios)
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - productos.length) : 0;
+  const currentRows = productos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
+  // Función getStockChip (sin cambios)
+  const getStockChip = (stock) => {
+    let level = 'Alto';
+    let className = 'high';
+    if (stock === 0) {
+      level = 'Agotado';
+      className = 'low';
+    } else if (stock <= 10) {
+      level = 'Bajo';
+      className = 'low';
+    } else if (stock <= 50) {
+      level = 'Medio';
+      className = 'medium';
+    }
+    return <Chip label={`${stock} - ${level}`} className={`stockChip ${className}`} size="small" />;
+  };
+
+  // --- Manejadores para CRUD ---
+
+  const handleOpenAddDialog = () => {
+    setProductoActual({ nombre: '', precio: '', stock: '', categoria: '' });
+    setIsEditMode(false);
+    setOpenDialog(true);
+  };
+
+  const handleOpenEditDialog = (producto) => {
+    setProductoActual(producto);
+    setIsEditMode(true);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setProductoActual(null);
+  };
+
+  const handleSaveProducto = async (productoData) => {
+    setLoading(true);
+    setError(null);
+    const method = isEditMode ? 'PUT' : 'POST';
+    const url = isEditMode ? `${API_URL}/${productoData.id}` : API_URL;
+
+    // Convertir precio y stock a números
+    const dataToSend = {
+      ...productoData,
+      precio: parseFloat(productoData.precio),
+      stock: parseInt(productoData.stock, 10),
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSend),
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `Error HTTP: ${response.status}`);
+      }
+      await fetchProductos(); // Recargar productos
+      handleCloseDialog();
+    } catch (err) {
+      setError(`Error al guardar producto: ${err.message}`);
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteProducto = async (id) => {
+    // Confirmación antes de eliminar
+    if (!window.confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
+      }
+      await fetchProductos(); // Recargar productos
+    } catch (err) {
+      setError(`Error al eliminar producto: ${err.message}`);
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  return (
+    <>
+      <NuevoNavBar />
+      <Box component="main" className="gestionProductosContainer">
+        <Paper elevation={0} className="gestionProductosPaper">
+          <Box className="gestionProductosHeader">
+            <Typography variant="h5" component="h1" className="gestionProductosTitle">
+              Gestión de Productos
+            </Typography>
+            <Button
+              variant="contained"
+              className="addButton"
+              startIcon={<AddCircleOutlineIcon />}
+              onClick={handleOpenAddDialog}
+              disabled={loading}
+            >
+              Añadir Producto
+            </Button>
+          </Box>
+
+          {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+          {loading && !productos.length && ( // Mostrar spinner solo si no hay productos y está cargando inicialmente
+            <Box sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
+              <CircularProgress />
+            </Box>
+          )}
+
+          <TableContainer className="gestionProductosTableContainer">
+            <Table stickyHeader aria-label="Tabla de gestión de productos">
+              <TableHead>
+                <TableRow>
+                  <TableCell className="tableHeadCell">Nombre</TableCell>
+                  <TableCell className="tableHeadCell">Categoría</TableCell>
+                  <TableCell className="tableHeadCell" align="right">Precio</TableCell>
+                  <TableCell className="tableHeadCell" align="center">Stock</TableCell>
+                  <TableCell className="tableHeadCell" align="center">Acciones</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {currentRows.map((prod) => (
+                  <TableRow key={prod.id} hover className="tableRow">
+                    <TableCell component="th" scope="row" className="tableBodyCell">
+                      {prod.nombre}
+                    </TableCell>
+                    <TableCell className="tableBodyCell">{prod.categoria}</TableCell>
+                    <TableCell className="tableBodyCell" align="right">
+                      ${typeof prod.precio === 'number' ? prod.precio.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'N/A'}
+                    </TableCell>
+                    <TableCell className="tableBodyCell" align="center">
+                      {getStockChip(prod.stock)}
+                    </TableCell>
+                    <TableCell className="tableBodyCell" align="center">
+                      <Button
+                        variant="contained"
+                        size="small"
+                        className="actionButton editButton"
+                        startIcon={<EditIcon sx={{ fontSize: 16 }} />}
+                        onClick={() => handleOpenEditDialog(prod)}
+                        disabled={loading}
+                      >
+                        Editar
+                      </Button>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        className="actionButton deleteButton"
+                        startIcon={<DeleteIcon sx={{ fontSize: 16 }} />}
+                        onClick={() => handleDeleteProducto(prod.id)}
+                        disabled={loading}
+                      >
+                        Eliminar
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: 69 * emptyRows }}>
+                    <TableCell colSpan={5} />
+                  </TableRow>
+                )}
+                 {!loading && !productos.length && !error && (
+                  <TableRow>
+                    <TableCell colSpan={5} align="center">
+                      No hay productos para mostrar. Intenta añadir alguno.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+          <TablePagination
+            className="tablePagination"
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={productos.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            labelRowsPerPage="Filas por página:"
+            labelDisplayedRows={({ from, to, count }) => `${from}-${to} de ${count}`}
+          />
+        </Paper>
+      </Box>
+      <Footer />
+
+      {/* Diálogo para añadir/editar producto */}
+      {openDialog && (
+        <ProductoFormDialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          onSave={handleSaveProducto}
+          producto={productoActual}
+          isEditMode={isEditMode}
+        />
+      )}
+    </>
+  );
+}
+
+export default GestionProductos;

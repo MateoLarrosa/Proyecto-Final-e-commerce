@@ -1,0 +1,55 @@
+.quantityControl {
+    display: inline-flex;
+    align-items: center;
+    border: 3px solid gold;
+    border-radius: 20px;
+    padding: 5px 5px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+  }
+
+  .quantityControl button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    padding: 0 10px;
+    cursor: pointer;
+    color: black;
+  }
+
+  .quantityControl span {
+    margin: 0 10px;
+    font-size: 16px;
+  }
+
+  .quantityControl button:focus {
+    outline: none;
+  }
+
+  .cartContainer {
+    display: flex;
+    flex-direction: row;
+    font-family: 'Open Sans', sans-serif;
+    gap: 30px;
+    margin-left: 0px;
+    width: 365px;
+    /* Centrar imagen y detalles verticalmente */
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .divImg {
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+  }
+
+  .divImg img {
+    height: 100px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+  }

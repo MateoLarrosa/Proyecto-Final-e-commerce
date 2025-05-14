@@ -1,0 +1,270 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Juan Pérez",
+      "email": "juan@example.com",
+      "role": "Administrador"
+    },
+    {
+      "id": "2",
+      "name": "Ana Gómez",
+      "email": "ana@example.com",
+      "role": "Cliente"
+    },
+    {
+      "id": "8d74",
+      "username": "adolfitwo",
+      "email": "adolfo@mail.com",
+      "password": "adolfito",
+      "nombre": "Adolf",
+      "apellido": "Garcia",
+      "role": "Cliente"
+    },
+    {
+      "id": "2730",
+      "username": "MateoPrueba001",
+      "email": "mateo@prueba.com",
+      "password": "12345",
+      "nombre": "Mateo",
+      "apellido": "Larrosa",
+      "role": "Cliente"
+    },
+    {
+      "id": "df2a",
+      "username": "AugustoPrueba02",
+      "email": "augusto@prueba.com",
+      "password": "121212",
+      "nombre": "Augusto",
+      "apellido": "Peralta",
+      "role": "Cliente"
+    },
+    {
+      "id": "2060",
+      "username": "lester",
+      "email": "lestergildiaz@gmail.com",
+      "password": "777",
+      "nombre": "lester",
+      "apellido": "gil",
+      "role": "Cliente"
+    }
+  ],
+  "productos": [
+    {
+      "id": "1",
+      "nombre": "Camiseta Nike",
+      "precio": 1250.99,
+      "stock": 50,
+      "categoria": "Ropa",
+      "imagen": "/assets/camisetaNike.jpg"
+    },
+    {
+      "id": "2",
+      "nombre": "Auriculares",
+      "precio": 3500,
+      "stock": 17,
+      "categoria": "Electrónica",
+      "imagen": "/assets/auricularesBeats.jpg"
+    },
+    {
+      "id": "3",
+      "nombre": "Zapatillas Running",
+      "precio": 5800.5,
+      "stock": 100,
+      "categoria": "Calzado",
+      "imagen": "/assets/zapatillasRunning.jpg"
+    },
+    {
+      "id": "5",
+      "nombre": "El Código Da Vinci",
+      "precio": 1500,
+      "stock": 8,
+      "categoria": "Libros",
+      "imagen": "/assets/libroCodigoDaVinci.jpg"
+    },
+    {
+      "id": "6",
+      "nombre": "Monitor Curvo",
+      "precio": 15000,
+      "stock": 1,
+      "categoria": "Electrónica",
+      "imagen": "/assets/monitorCurvo.jpg"
+    },
+    {
+      "id": "7",
+      "nombre": "Cafetera Express",
+      "precio": 6700,
+      "stock": 30,
+      "categoria": "Hogar",
+      "imagen": "/assets/CafeteraExpress.jpg"
+    },
+    {
+      "id": "8",
+      "nombre": "Mochila Urbana",
+      "precio": 2800,
+      "stock": 60,
+      "categoria": "Accesorios",
+      "imagen": "/assets/MochilaUrbana.jpg"
+    },
+    {
+      "id": "9",
+      "nombre": "Silla Gamer",
+      "precio": 9500,
+      "stock": 12,
+      "categoria": "Muebles",
+      "imagen": "/assets/SillaGamerErgonomica.jpg"
+    },
+    {
+      "id": "10",
+      "nombre": "Smartwatch",
+      "precio": 7200,
+      "stock": 40,
+      "categoria": "Electrónica",
+      "imagen": "/assets/SmartwatchDeportivoGPS.jpg"
+    },
+    {
+      "id": "0694",
+      "nombre": "Zapatillas de Mujer",
+      "precio": 59999,
+      "stock": 20,
+      "categoria": "Calzado",
+      "imagen": "/assets/sneakersMujer.jpg"
+    },
+    {
+      "id": "beaa",
+      "nombre": "Zapatilla Puma",
+      "precio": 50,
+      "stock": 10,
+      "categoria": "Calzado",
+      "imagen": "/assets/PumaDeportivas.jpg"
+    },
+    {
+      "id": "b4e0",
+      "nombre": "Zapatilla UnderArmor",
+      "precio": 70,
+      "stock": 7,
+      "categoria": "Calzado",
+      "imagen": "/assets/UnderArmor.jpg"
+    },
+    {
+      "id": "230e",
+      "nombre": "Camisa de lino",
+      "precio": 20000,
+      "stock": 50,
+      "categoria": "Ropa",
+      "imagen": "/assets/camisaLino.jpg"
+    },
+    {
+      "id": "a363",
+      "nombre": "Camisa de vestir",
+      "precio": 30000,
+      "stock": 16,
+      "categoria": "Ropa",
+      "imagen": "/assets/camisaVestir.jpg"
+    },
+    {
+      "id": "0eca",
+      "nombre": "Camiseta sin manga Mujer",
+      "precio": 10000,
+      "stock": 4,
+      "categoria": "Ropa",
+      "imagen": "/assets/camisetaSinMangaMujer.jpg"
+    },
+    {
+      "id": "91cf",
+      "nombre": "Libro Frankenstein",
+      "precio": 25000,
+      "stock": 10,
+      "categoria": "Libros",
+      "imagen": "/assets/libroFrankenstein.jpg"
+    },
+    {
+      "id": "1cb1",
+      "nombre": "Libro Dragon Ball",
+      "precio": 10000,
+      "stock": 1,
+      "categoria": "Libros",
+      "imagen": "/assets/libroDb.jpg"
+    },
+    {
+      "id": "1666",
+      "nombre": "Coleccion Game Of Thrones",
+      "precio": 100000,
+      "stock": 5,
+      "categoria": "Libros",
+      "imagen": "/assets/LibrosGot.jpg"
+    },
+    {
+      "id": "cc0b",
+      "nombre": "Oso de peluche",
+      "precio": 5000,
+      "stock": 20,
+      "categoria": "Juguetes",
+      "imagen": "/assets/juguetes.jpg"
+    },
+    {
+      "id": "14bb",
+      "nombre": "Lego StarWars",
+      "precio": 10000,
+      "stock": 13,
+      "categoria": "Juguetes",
+      "imagen": "/assets/legoStarWars.jpg"
+    },
+    {
+      "id": "2ee0",
+      "nombre": "Optimus Prime",
+      "precio": 3000,
+      "stock": 100,
+      "categoria": "Juguetes",
+      "imagen": "/assets/optimusPrime.jpg"
+    },
+    {
+      "id": "8ca2",
+      "nombre": "Batman",
+      "precio": 2000,
+      "stock": 200,
+      "categoria": "Juguetes",
+      "imagen": "/assets/batman.jpg"
+    },
+    {
+      "id": "03a2",
+      "nombre": "Bolso Calvin Klein",
+      "precio": 150000,
+      "stock": 18,
+      "categoria": "Accesorios",
+      "imagen": "/assets/bolsoCalvin.jpg"
+    },
+    {
+      "id": "4b72",
+      "nombre": "Bolso Tote",
+      "precio": 80000,
+      "stock": 12,
+      "categoria": "Accesorios",
+      "imagen": "/assets/bolsoTote.jpg"
+    },
+    {
+      "id": "e408",
+      "nombre": "Mochila Rosa",
+      "precio": 30000,
+      "stock": 8,
+      "categoria": "Accesorios",
+      "imagen": "/assets/mochilaRosa.jpg"
+    },
+    {
+      "id": "353b",
+      "nombre": "Lampara",
+      "precio": 15000,
+      "stock": 6,
+      "categoria": "Muebles",
+      "imagen": "/assets/Lampara.jpg"
+    },
+    {
+      "id": "61a8",
+      "nombre": "Soporte esponja",
+      "precio": 18000,
+      "stock": 15,
+      "categoria": "Muebles",
+      "imagen": "/assets/SoporteEsponja.jpg"
+    }
+  ]
+}
