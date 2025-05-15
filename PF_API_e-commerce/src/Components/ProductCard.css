@@ -11,6 +11,7 @@
     min-height: 320px;
     height: auto;
     transition: transform 0.2s;
+    position: relative;
 }
 
 .product-card:hover {
@@ -69,7 +70,41 @@
     width: 100%;
 }
 
+/* Stock indicators */
+.stock-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.out-of-stock {
+    background-color: #FEE2E2;
+    color: #991B1B;
+}
+
+.low-stock {
+    background-color: #FEF3C7;
+    color: #92400E;
+}
+
+.medium-stock {
+    background-color: #E0F2FE;
+    color: #075985;
+}
+
+/* Cuando el producto está agotado, mostrar overlay y escala de grises */
+.product-card:has(.out-of-stock) .product-image {
+    filter: grayscale(100%);
+    opacity: 0.7;
+}
+
 .image-with-text {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -56,7 +56,7 @@ const CarritoCompleto = () => {
               />
             ))}
           </div>
-          <ResumenCarrito total={total} />
+          <ResumenCarrito total={total} productos={productos} />
         </div>
         <Footer />
       </div>

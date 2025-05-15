@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {
   Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
-  TextField, Button, FormControl, InputLabel, Select, MenuItem
+  TextField, Button, FormControl, InputLabel, Select, MenuItem, FormHelperText
 } from '@mui/material';
 
-// Lista de categorías (podría venir de una API o ser configurable)
+// Lista de categorías disponibles
 const categoriasDisponibles = [
   'Ropa', 'Electrónica', 'Calzado', 'Libros', 'Hogar', 'Accesorios', 'Muebles', 'Deportes', 'Juguetes', 'Alimentos', 'Otros'
 ];
@@ -15,32 +15,65 @@ function ProductoFormDialog({ open, onClose, onSave, producto, isEditMode }) {
     precio: '',
     stock: '',
     categoria: '',
-    // Podrías añadir más campos como descripción, imagenURL, etc.
+    imagen: ''
   });
   const [formErrors, setFormErrors] = useState({});
+  const [selectedImage, setSelectedImage] = useState('');
+  const [imagePreview, setImagePreview] = useState('');
+  const fileInputRef = React.useRef();
 
   useEffect(() => {
     if (producto) {
       setFormData({
-        id: producto.id || undefined, // Incluir id si existe (para edición)
+        id: producto.id || undefined,
         nombre: producto.nombre || '',
         precio: producto.precio || '',
         stock: producto.stock || '',
         categoria: producto.categoria || '',
+        imagen: producto.imagen || ''
       });
+      setSelectedImage(producto.imagen || '');
+      setImagePreview(producto.imagen || '');
     } else {
-      // Resetear para el modo "Añadir"
-      setFormData({ nombre: '', precio: '', stock: '', categoria: '' });
+      setFormData({ nombre: '', precio: '', stock: '', categoria: '', imagen: '' });
+      setSelectedImage('');
+      setImagePreview('');
     }
-    setFormErrors({}); // Limpiar errores al abrir/cambiar producto
-  }, [producto, open]); // Se ejecuta cuando el producto o el estado 'open' cambian
+    setFormErrors({});
+  }, [producto, open]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    // Limpiar error para el campo que se está modificando
     if (formErrors[name]) {
       setFormErrors(prev => ({ ...prev, [name]: null }));
+    }
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        setFormErrors(prev => ({ ...prev, imagen: 'El archivo debe ser una imagen' }));
+        return;
+      }
+
+      // Crear URL temporal para la vista previa
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
+
+      // Convertir la imagen a Base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedImage(reader.result);
+        setFormData(prev => ({ ...prev, imagen: reader.result }));
+      };
+      reader.readAsDataURL(file);
+
+      // Limpiar error si existe
+      if (formErrors.imagen) {
+        setFormErrors(prev => ({ ...prev, imagen: null }));
+      }
     }
   };
 
@@ -48,6 +81,7 @@ function ProductoFormDialog({ open, onClose, onSave, producto, isEditMode }) {
     const errors = {};
     if (!formData.nombre.trim()) errors.nombre = 'El nombre es obligatorio.';
     if (!formData.categoria) errors.categoria = 'La categoría es obligatoria.';
+    if (!formData.imagen) errors.imagen = 'La imagen es obligatoria.';
     
     const precioNum = parseFloat(formData.precio);
     if (isNaN(precioNum) || precioNum <= 0) errors.precio = 'El precio debe ser un número positivo.';
@@ -56,7 +90,7 @@ function ProductoFormDialog({ open, onClose, onSave, producto, isEditMode }) {
     if (isNaN(stockNum) || stockNum < 0) errors.stock = 'El stock debe ser un número entero no negativo.';
     
     setFormErrors(errors);
-    return Object.keys(errors).length === 0; // Retorna true si no hay errores
+    return Object.keys(errors).length === 0;
   };
 
   const handleSubmit = () => {
@@ -129,6 +163,46 @@ function ProductoFormDialog({ open, onClose, onSave, producto, isEditMode }) {
           helperText={formErrors.stock}
           InputProps={{ inputProps: { min: 0, step: "1" } }}
         />
+        {/* Campo de imagen */}
+        <FormControl fullWidth margin="dense" error={!!formErrors.imagen} sx={{ mb: 2 }}>
+          <input
+            accept="image/*"
+            style={{ display: 'none' }}
+            id="imagen-input"
+            type="file"
+            onChange={handleImageChange}
+            ref={fileInputRef}
+          />
+          <label htmlFor="imagen-input">
+            <Button
+              variant="outlined"
+              component="span"
+              fullWidth
+              style={{ height: '56px' }}
+            >
+              {imagePreview ? 'Cambiar Imagen' : 'Subir Imagen'}
+            </Button>
+          </label>
+          {formErrors.imagen && <FormHelperText>{formErrors.imagen}</FormHelperText>}
+        </FormControl>
+
+        {/* Vista previa de la imagen */}
+        {imagePreview && (
+          <div style={{ textAlign: 'center', marginTop: '20px' }}>
+            <img 
+              src={imagePreview} 
+              alt="Vista previa" 
+              style={{ 
+                maxWidth: '200px', 
+                maxHeight: '200px', 
+                objectFit: 'contain',
+                border: '1px solid #ddd',
+                borderRadius: '4px',
+                padding: '8px'
+              }} 
+            />
+          </div>
+        )}
       </DialogContent>
       <DialogActions sx={{ p: '16px 24px' }}>
         <Button onClick={onClose} color="secondary">Cancelar</Button>
