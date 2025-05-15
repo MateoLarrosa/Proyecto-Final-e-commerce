@@ -2,11 +2,12 @@ import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box, Typography, Button, Table, TableBody, TableCell,
   TableContainer, TableHead, TableRow, Paper, TablePagination, Chip,
-  CircularProgress, Alert
+  CircularProgress, Alert, TextField, InputAdornment
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import SearchIcon from '@mui/icons-material/Search';
 import './gestionProductosStyles.css';
 import NuevoNavBar from '../../Components/NuevoNavBar';
 import Footer from '../../Components/Footer';
@@ -16,6 +17,8 @@ const API_URL = 'http://localhost:3001/productos';
 
 function GestionProductos() {
   const [productos, setProductos] = useState([]);
+  const [filteredProductos, setFilteredProductos] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [loading, setLoading] = useState(false);
@@ -60,6 +63,29 @@ function GestionProductos() {
     fetchProductos();
   }, [fetchProductos]);
 
+  // Función para filtrar productos
+  const handleSearch = (event) => {
+    const term = event.target.value.toLowerCase();
+    setSearchTerm(term);
+    setPage(0); // Resetear la página al buscar
+    
+    if (!term.trim()) {
+      setFilteredProductos(productos);
+      return;
+    }
+
+    const filtered = productos.filter(producto => 
+      producto.nombre.toLowerCase().includes(term) ||
+      producto.categoria.toLowerCase().includes(term)
+    );
+    setFilteredProductos(filtered);
+  };
+
+  // Actualizar productos filtrados cuando cambian los productos
+  useEffect(() => {
+    setFilteredProductos(productos);
+  }, [productos]);
+
   // Manejadores de paginación
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -70,9 +96,9 @@ function GestionProductos() {
     setPage(0);
   };
 
-  // Lógica para filas vacías y filas actuales (sin cambios)
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - productos.length) : 0;
-  const currentRows = productos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  // Modificar la lógica de paginación para usar productos filtrados
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - filteredProductos.length) : 0;
+  const currentRows = filteredProductos.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   // Función getStockChip (sin cambios)
   const getStockChip = (stock) => {
@@ -195,8 +221,26 @@ function GestionProductos() {
             </Button>
           </Box>
 
+          {/* Campo de búsqueda */}
+          <Box sx={{ mb: 2, mt: 2 }}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              placeholder="Buscar por nombre o categoría..."
+              value={searchTerm}
+              onChange={handleSearch}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Box>
+
           {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-          {loading && !productos.length && ( // Mostrar spinner solo si no hay productos y está cargando inicialmente
+          {loading && !filteredProductos.length && ( // Mostrar spinner solo si no hay productos y está cargando inicialmente
             <Box sx={{ display: 'flex', justifyContent: 'center', my: 3 }}>
               <CircularProgress />
             </Box>
@@ -255,10 +299,12 @@ function GestionProductos() {
                     <TableCell colSpan={5} />
                   </TableRow>
                 )}
-                 {!loading && !productos.length && !error && (
+                {!loading && !filteredProductos.length && !error && (
                   <TableRow>
                     <TableCell colSpan={5} align="center">
-                      No hay productos para mostrar. Intenta añadir alguno.
+                      {searchTerm 
+                        ? 'No se encontraron productos que coincidan con la búsqueda.'
+                        : 'No hay productos para mostrar. Intenta añadir alguno.'}
                     </TableCell>
                   </TableRow>
                 )}
@@ -270,7 +316,7 @@ function GestionProductos() {
             className="tablePagination"
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={productos.length}
+            count={filteredProductos.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
