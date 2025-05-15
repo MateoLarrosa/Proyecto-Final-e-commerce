@@ -120,6 +120,7 @@ const Home = () => {
                                     title={prod.title}
                                     description={prod.description}
                                     price={prod.price}
+                                    stock={prod.stock}
                                 />
                             </Link>
                         ))

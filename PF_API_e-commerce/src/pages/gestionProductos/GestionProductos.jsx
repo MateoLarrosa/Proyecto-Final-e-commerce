@@ -2,17 +2,16 @@ import React, { useState, useEffect, useCallback } from 'react';
 import {
   Box, Typography, Button, Table, TableBody, TableCell,
   TableContainer, TableHead, TableRow, Paper, TablePagination, Chip,
-  CircularProgress, Alert // Para feedback de carga y errores
+  CircularProgress, Alert
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import './gestionProductosStyles.css';
-import NuevoNavBar from '../../Components/NuevoNavBar'; // Asumo que este componente existe
-import Footer from '../../Components/Footer'; // Asumo que este componente existe
-import ProductoFormDialog from './ProductoFormDialog'; // Nuevo componente para el formulario
+import NuevoNavBar from '../../Components/NuevoNavBar';
+import Footer from '../../Components/Footer';
+import ProductoFormDialog from './ProductoFormDialog';
 
-// URL base de la API de json-server
 const API_URL = 'http://localhost:3001/productos';
 
 function GestionProductos() {
@@ -21,32 +20,42 @@ function GestionProductos() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // Estado para el diálogo
   const [openDialog, setOpenDialog] = useState(false);
-  const [productoActual, setProductoActual] = useState(null); // Para edición o nuevo producto
+  const [productoActual, setProductoActual] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
+
+  // Obtener el usuario actual del localStorage una sola vez al montar el componente
+  const currentUser = React.useMemo(() => {
+    const userString = localStorage.getItem('user');
+    if (!userString) return null;
+    try {
+      return JSON.parse(userString);
+    } catch (e) {
+      console.error('Error parsing user from localStorage:', e);
+      return null;
+    }
+  }, []); // Solo se ejecuta una vez al montar el componente
 
   // Función para obtener productos de la API
   const fetchProductos = useCallback(async () => {
+    if (!currentUser?.id) return;
+
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${API_URL}?_sort=nombre&_order=asc`); // Ordenar por nombre
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
+      const response = await fetch(`${API_URL}?userId=${currentUser.id}&_sort=nombre&_order=asc`);
+      if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
       const data = await response.json();
       setProductos(data);
     } catch (err) {
-      setError(`Error al cargar productos: ${err.message}. Asegúrate de que json-server esté corriendo.`);
+      setError(`Error al cargar productos: ${err.message}`);
       console.error(err);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [currentUser?.id]); // Solo depende del ID del usuario
 
-  // Cargar productos al montar el componente
+  // Cargar productos solo cuando cambie el ID del usuario
   useEffect(() => {
     fetchProductos();
   }, [fetchProductos]);
@@ -102,14 +111,20 @@ function GestionProductos() {
   };
 
   const handleSaveProducto = async (productoData) => {
+    if (!currentUser) {
+      setError('No hay usuario autenticado');
+      return;
+    }
+
     setLoading(true);
     setError(null);
     const method = isEditMode ? 'PUT' : 'POST';
     const url = isEditMode ? `${API_URL}/${productoData.id}` : API_URL;
 
-    // Convertir precio y stock a números
+    // Agregar el userId al producto
     const dataToSend = {
       ...productoData,
+      userId: currentUser.id,
       precio: parseFloat(productoData.precio),
       stock: parseInt(productoData.stock, 10),
     };
@@ -126,7 +141,7 @@ function GestionProductos() {
         const errorData = await response.json();
         throw new Error(errorData.message || `Error HTTP: ${response.status}`);
       }
-      await fetchProductos(); // Recargar productos
+      await fetchProductos();
       handleCloseDialog();
     } catch (err) {
       setError(`Error al guardar producto: ${err.message}`);
