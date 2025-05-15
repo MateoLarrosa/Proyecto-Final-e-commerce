@@ -46,9 +46,12 @@
       "password": "123",
       "nombre": "Andres",
       "apellido": "Mendez",
-      "role": "Cliente"
+      "role": "Cliente",
+      "CalleYAltura": "Mexico 1200",
+      "Provincia": "CABA",
+      "Ciudad": "CABA",
+      "CodigoPostal": "1060"
     }
-   
   ],
   "productos": [
     {

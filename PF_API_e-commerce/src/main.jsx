@@ -12,6 +12,7 @@ import './index.css';
 import CarritoCompleto from './pages/carritoDeCompra/CarritoCompleto.jsx';
 import GestionProductos from './pages/gestionProductos/GestionProductos.jsx';  
 import InfoLoginYSeguridad from './pages/miPerfil/InfoLoginYSeguridad.jsx';
+import TusDirecciones from './pages/miPerfil/TusDirecciones.jsx';
 import CustomerService from './pages/miPerfil/CustomerService.jsx';
 import Register from './pages/registro&login/Register.jsx';
 import LoginUser from './pages/registro&login/LoginUser.jsx';
@@ -31,6 +32,8 @@ createRoot(document.getElementById('root')).render(
         <Route path="/gestion-de-productos" element={<GestionProductos/>} />
         <Route path="/mi-perfil/login-seguridad" element={<InfoLoginYSeguridad/>} />
         <Route path="/mi-perfil/customer-service" element={<CustomerService/>} />
+        <Route path="/mi-perfil/customer-service" element={<CustomerService/>} />
+        <Route path="/mi-perfil/tus-direcciones" element={<TusDirecciones/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login-user" element={<LoginUser />} />
 

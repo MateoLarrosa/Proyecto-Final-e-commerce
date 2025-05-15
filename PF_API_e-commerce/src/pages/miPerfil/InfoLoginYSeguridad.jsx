@@ -93,7 +93,7 @@ const InfoLoginYSeguridad = () => {
     }
 
     const handleClear = () => {
-        localStorage.removeItem(LOCAL_STORAGE_KEY)
+        localStorage.removeItem("user")
         setFormData({
             nombre: '',
             apellido: '',
