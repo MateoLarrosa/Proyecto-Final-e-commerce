@@ -44,13 +44,16 @@
       "username": "andresM",
       "email": "hola@correo",
       "password": "123",
-      "nombre": "Andres",
+      "nombre": "Andres Felipe",
       "apellido": "Mendez",
       "role": "Cliente",
-      "CalleYAltura": "Mexico 1200",
+      "CalleYAltura": "Mexico 1340",
       "Provincia": "CABA",
       "Ciudad": "CABA",
-      "CodigoPostal": "1060"
+      "CodigoPostal": "1060",
+      "edad": "",
+      "telefono": "",
+      "indicativo": ""
     },
     {
       "id": "823d",

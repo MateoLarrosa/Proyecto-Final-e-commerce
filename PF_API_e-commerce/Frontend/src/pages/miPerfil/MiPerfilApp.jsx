@@ -1,5 +1,5 @@
 
-import Card from "./Card";
+import Card from "./Card.jsx";
 import NuevoNavBar from '../../Components/NuevoNavBar.jsx';
 import Footer from '../../Components/Footer.jsx';
 import styles from './appStyles.module.css';
