@@ -1,7 +1,9 @@
-package com.api.amazonas.controllers;
+package com.api.amazonas.amazonas_e_commerce.controller;
 
-import com.api.amazonas.models.Usuario;
-import com.api.amazonas.services.UsuarioService;
+// Update the import below to match the actual package of Usuario
+import com.api.amazonas.amazonas_e_commerce.model.Usuario;
+// Update the import below to match the actual package of UsuarioService
+import com.api.amazonas.amazonas_e_commerce.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

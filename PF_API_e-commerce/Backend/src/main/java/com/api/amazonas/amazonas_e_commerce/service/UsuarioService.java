@@ -1,7 +1,7 @@
-package com.api.amazonas.services;
+package com.api.amazonas.amazonas_e_commerce.service;
 
-import com.api.amazonas.models.Usuario;
-import com.api.amazonas.repositories.UsuarioRepository;
+import com.api.amazonas.amazonas_e_commerce.model.Usuario;
+import com.api.amazonas.amazonas_e_commerce.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

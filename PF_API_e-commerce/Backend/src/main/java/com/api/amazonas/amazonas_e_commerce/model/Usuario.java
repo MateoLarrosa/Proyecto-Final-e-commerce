@@ -1,4 +1,4 @@
-package com.api.amazonas.models;
+package com.api.amazonas.amazonas_e_commerce.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

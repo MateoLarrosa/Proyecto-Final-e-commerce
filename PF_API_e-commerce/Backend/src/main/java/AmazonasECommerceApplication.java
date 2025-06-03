@@ -1,5 +1,3 @@
-package com.api.amazonas.amazonas_e_commerce;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

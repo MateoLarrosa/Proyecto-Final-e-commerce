@@ -1,6 +1,7 @@
-package com.api.amazonas.repositories;
+package com.api.amazonas.amazonas_e_commerce.repository;
 
-import com.api.amazonas.models.Usuario;
+// Update the import path below to match the actual location of Usuario.java
+import com.api.amazonas.amazonas_e_commerce.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
