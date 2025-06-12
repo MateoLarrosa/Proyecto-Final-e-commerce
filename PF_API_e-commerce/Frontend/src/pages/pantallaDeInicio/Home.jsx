@@ -8,7 +8,7 @@ import NuevoNavBar from "../../Components/NuevoNavBar";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Home.css";
 
-const API_URL = "http://localhost:8080/api/productos";
+const API_URL = "http://localhost:3001/productos";
 
 const Home = () => {
     const location = useLocation();

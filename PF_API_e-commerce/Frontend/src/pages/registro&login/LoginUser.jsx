@@ -13,21 +13,28 @@ const LoginUser = () => {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch(`${API_URL}?email=${form.email}&password=${form.password}`);
-    const users = await res.json();
-    if (users.length === 1) {
-      setMsg("Login exitoso. ¡Bienvenido!");
-      localStorage.setItem('isLoggedIn', 'true');
+    try {
+      const res = await fetch(`${API_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form)
+      });
 
-      // Guardo la info del usuario para recuperarla en InfoLoginYSeguridad...
-      localStorage.setItem('user', JSON.stringify(users[0]));
-
-      navigate("/home");
-    } else {
-      setMsg("Email o contraseña incorrectos.");
+      const data = await res.json();
+      
+      if (res.ok) {
+        setMsg("Login exitoso. ¡Bienvenido!");
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('user', JSON.stringify(data));
+        navigate("/home");
+      } else {
+        setMsg(data.message || "Email o contraseña incorrectos.");
+      }
+    } catch (error) {
+      console.error('Error de conexión:', error);
+      setMsg("Error al conectar con el servidor. Intente de nuevo.");
     }
   };
 

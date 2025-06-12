@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class UsuarioController {
 
     @Autowired
@@ -40,13 +40,17 @@ public class UsuarioController {
         return usuarioService.obtenerUsuarioPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<Usuario> login(@RequestBody Map<String, String> credentials) {
-        return usuarioService.login(credentials.get("email"), credentials.get("password"))
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.badRequest().build());
+    }    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
+        try {
+            return usuarioService.login(credentials.get("email"), credentials.get("password"))
+                .map(userInfo -> ResponseEntity.ok().body(userInfo))
+                .orElse(ResponseEntity.status(401)
+                    .body(Map.of("message", "Email o contraseña incorrectos")));
+        } catch (Exception e) {
+            return ResponseEntity.status(500)
+                .body(Map.of("message", "Error al intentar hacer login: " + e.getMessage()));
+        }
     }
 
     @PatchMapping("/{id}")
