@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class UsuarioController {
 
@@ -40,7 +40,8 @@ public class UsuarioController {
         return usuarioService.obtenerUsuarioPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }    @PostMapping("/login")
+    }    
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
         try {
             return usuarioService.login(credentials.get("email"), credentials.get("password"))

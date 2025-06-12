@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import NuevoNavBar from "../../Components/NuevoNavBar";
 import Footer from "../../Components/Footer";
 
-const API_URL = "http://localhost:3001/users";
+const API_URL = "http://localhost:8080/api/users";
 
 const LoginUser = () => {
   const [form, setForm] = useState({ email: "", password: "" });

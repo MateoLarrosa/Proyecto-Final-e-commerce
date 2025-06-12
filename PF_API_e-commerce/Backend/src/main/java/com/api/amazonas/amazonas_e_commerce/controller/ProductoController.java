@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
 @RestController
-@RequestMapping("/productos")
+@RequestMapping("/api/productos")
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class ProductoController {
     
@@ -93,8 +93,8 @@ public class ProductoController {
 
     private int parseNumber(Object frontendValue, Object backendValue) {
         if (frontendValue != null) {
-            if (frontendValue instanceof Number) {
-                return ((Number) frontendValue).intValue();
+            if (frontendValue instanceof Number number) {
+                return number.intValue();
             }
             try {
                 return Integer.parseInt(frontendValue.toString());
@@ -104,8 +104,8 @@ public class ProductoController {
             }
         }
         if (backendValue != null) {
-            if (backendValue instanceof Number) {
-                return ((Number) backendValue).intValue();
+            if (backendValue instanceof Number number) {
+                return number.intValue();
             }
             return Integer.parseInt(backendValue.toString());
         }
