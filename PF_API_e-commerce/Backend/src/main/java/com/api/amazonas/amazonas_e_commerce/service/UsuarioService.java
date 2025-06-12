@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -89,11 +90,24 @@ public class UsuarioService {
     // Eliminar usuario
     public void eliminarUsuario(String id) {
         usuarioRepository.deleteById(id);
-    }
-
-    // Login de usuario
-    public Optional<Usuario> login(String email, String password) {
-        return usuarioRepository.findByEmail(email)
-            .filter(usuario -> usuario.getPassword().equals(password));
+    }    // Login
+    public Optional<Map<String, Object>> login(String email, String password) {
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
+        
+        if (usuarioOpt.isPresent()) {
+            Usuario usuario = usuarioOpt.get();
+            if (usuario.getPassword().equals(password)) {
+                // Return user info without password
+                Map<String, Object> userInfo = Map.of(
+                    "id", usuario.getId(),
+                    "nombre", usuario.getNombre(),
+                    "apellido", usuario.getApellido(),
+                    "email", usuario.getEmail(),
+                    "role", usuario.getRole()
+                );
+                return Optional.of(userInfo);
+            }
+        }
+        return Optional.empty();
     }
 }

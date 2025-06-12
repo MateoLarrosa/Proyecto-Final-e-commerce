@@ -115,3 +115,125 @@ Identify and stop the process that's listening on port 8080 or configure this ap
 2025-06-11T22:51:16.491-03:00  INFO 21184 --- [amazonas-e-commerce] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2025-06-11T22:51:16.500-03:00  INFO 21184 --- [amazonas-e-commerce] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2025-06-11T22:51:16.519-03:00  INFO 21184 --- [amazonas-e-commerce] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-06-12T19:52:49.228-03:00  INFO 49038 --- [amazonas-e-commerce] [main] .a.a.a.AmazonasECommerceApplicationTests : Starting AmazonasECommerceApplicationTests using Java 17.0.7 with PID 49038 (started by lester in /Users/lester/Desktop/API_LESTER_2/Proyecto-Final-e-commerce/PF_API_e-commerce/Backend)
+2025-06-12T19:52:49.231-03:00  INFO 49038 --- [amazonas-e-commerce] [main] .a.a.a.AmazonasECommerceApplicationTests : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T19:52:50.447-03:00  INFO 49038 --- [amazonas-e-commerce] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T19:52:50.540-03:00  INFO 49038 --- [amazonas-e-commerce] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 76 ms. Found 2 JPA repository interfaces.
+2025-06-12T19:52:51.191-03:00  INFO 49038 --- [amazonas-e-commerce] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T19:52:51.279-03:00  INFO 49038 --- [amazonas-e-commerce] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.15.Final
+2025-06-12T19:52:51.327-03:00  INFO 49038 --- [amazonas-e-commerce] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T19:52:51.870-03:00  INFO 49038 --- [amazonas-e-commerce] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T19:52:51.918-03:00  INFO 49038 --- [amazonas-e-commerce] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-06-12T19:52:52.484-03:00  INFO 49038 --- [amazonas-e-commerce] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@11cadb32
+2025-06-12T19:52:52.488-03:00  INFO 49038 --- [amazonas-e-commerce] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-06-12T19:52:52.588-03:00  WARN 49038 --- [amazonas-e-commerce] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-06-12T19:52:52.590-03:00  WARN 49038 --- [amazonas-e-commerce] [main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-06-12T19:52:52.630-03:00  INFO 49038 --- [amazonas-e-commerce] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T19:52:53.895-03:00  INFO 49038 --- [amazonas-e-commerce] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T19:52:54.055-03:00  INFO 49038 --- [amazonas-e-commerce] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T19:52:54.625-03:00  WARN 49038 --- [amazonas-e-commerce] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T19:52:54.674-03:00  WARN 49038 --- [amazonas-e-commerce] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 31cb9d30-0ab9-4ee5-997d-5f38fa392d2c
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T19:52:54.702-03:00  INFO 49038 --- [amazonas-e-commerce] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T19:52:55.601-03:00  INFO 49038 --- [amazonas-e-commerce] [main] .a.a.a.AmazonasECommerceApplicationTests : Started AmazonasECommerceApplicationTests in 6.948 seconds (process running for 8.671)
+2025-06-12T19:52:56.300-03:00  INFO 49038 --- [amazonas-e-commerce] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T19:52:56.304-03:00  INFO 49038 --- [amazonas-e-commerce] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-06-12T19:52:56.314-03:00  INFO 49038 --- [amazonas-e-commerce] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-06-12T19:53:45.337-03:00  INFO 49237 --- [amazonas-e-commerce] [main] c.a.a.a.AmazonasECommerceApplication     : Starting AmazonasECommerceApplication using Java 17.0.7 with PID 49237 (/Users/lester/Desktop/API_LESTER_2/Proyecto-Final-e-commerce/PF_API_e-commerce/Backend/target/classes started by lester in /Users/lester/Desktop/API_LESTER_2/Proyecto-Final-e-commerce/PF_API_e-commerce/Backend)
+2025-06-12T19:53:45.340-03:00  INFO 49237 --- [amazonas-e-commerce] [main] c.a.a.a.AmazonasECommerceApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T19:53:46.112-03:00  INFO 49237 --- [amazonas-e-commerce] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T19:53:46.185-03:00  INFO 49237 --- [amazonas-e-commerce] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 60 ms. Found 2 JPA repository interfaces.
+2025-06-12T19:53:46.832-03:00  INFO 49237 --- [amazonas-e-commerce] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 3001 (http)
+2025-06-12T19:53:46.854-03:00  INFO 49237 --- [amazonas-e-commerce] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T19:53:46.855-03:00  INFO 49237 --- [amazonas-e-commerce] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T19:53:46.918-03:00  INFO 49237 --- [amazonas-e-commerce] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T19:53:46.918-03:00  INFO 49237 --- [amazonas-e-commerce] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1512 ms
+2025-06-12T19:53:47.132-03:00  INFO 49237 --- [amazonas-e-commerce] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T19:53:47.277-03:00  INFO 49237 --- [amazonas-e-commerce] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.15.Final
+2025-06-12T19:53:47.324-03:00  INFO 49237 --- [amazonas-e-commerce] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T19:53:47.629-03:00  INFO 49237 --- [amazonas-e-commerce] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T19:53:47.666-03:00  INFO 49237 --- [amazonas-e-commerce] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-06-12T19:53:48.044-03:00  INFO 49237 --- [amazonas-e-commerce] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@702096ef
+2025-06-12T19:53:48.046-03:00  INFO 49237 --- [amazonas-e-commerce] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-06-12T19:53:48.106-03:00  WARN 49237 --- [amazonas-e-commerce] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-06-12T19:53:48.108-03:00  WARN 49237 --- [amazonas-e-commerce] [main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-06-12T19:53:48.139-03:00  INFO 49237 --- [amazonas-e-commerce] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T19:53:49.271-03:00  INFO 49237 --- [amazonas-e-commerce] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T19:53:49.353-03:00  INFO 49237 --- [amazonas-e-commerce] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T19:53:49.815-03:00  WARN 49237 --- [amazonas-e-commerce] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T19:53:49.868-03:00  WARN 49237 --- [amazonas-e-commerce] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 8c1ba0e9-a246-456a-9f9c-abcf2196546d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T19:53:49.887-03:00  INFO 49237 --- [amazonas-e-commerce] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T19:53:50.450-03:00  INFO 49237 --- [amazonas-e-commerce] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 3001 (http) with context path '/'
+2025-06-12T19:53:50.469-03:00  INFO 49237 --- [amazonas-e-commerce] [main] c.a.a.a.AmazonasECommerceApplication     : Started AmazonasECommerceApplication in 5.664 seconds (process running for 6.061)
+2025-06-12T19:53:57.032-03:00  INFO 49237 --- [amazonas-e-commerce] [http-nio-3001-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-12T19:53:57.033-03:00  INFO 49237 --- [amazonas-e-commerce] [http-nio-3001-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-06-12T19:53:57.038-03:00  INFO 49237 --- [amazonas-e-commerce] [http-nio-3001-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2025-06-12T19:55:47.248-03:00  INFO 49237 --- [amazonas-e-commerce] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-06-12T19:55:47.281-03:00  INFO 49237 --- [amazonas-e-commerce] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-06-12T19:55:47.293-03:00  INFO 49237 --- [amazonas-e-commerce] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T19:55:47.302-03:00  INFO 49237 --- [amazonas-e-commerce] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-06-12T19:55:47.313-03:00  INFO 49237 --- [amazonas-e-commerce] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-06-12T19:56:37.903-03:00  INFO 49814 --- [amazonas-e-commerce] [main] c.a.a.a.AmazonasECommerceApplication     : Starting AmazonasECommerceApplication using Java 17.0.7 with PID 49814 (/Users/lester/Desktop/API_LESTER_2/Proyecto-Final-e-commerce/PF_API_e-commerce/Backend/target/classes started by lester in /Users/lester/Desktop/API_LESTER_2/Proyecto-Final-e-commerce/PF_API_e-commerce/Backend)
+2025-06-12T19:56:37.908-03:00  INFO 49814 --- [amazonas-e-commerce] [main] c.a.a.a.AmazonasECommerceApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-06-12T19:56:39.031-03:00  INFO 49814 --- [amazonas-e-commerce] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-12T19:56:39.139-03:00  INFO 49814 --- [amazonas-e-commerce] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 92 ms. Found 2 JPA repository interfaces.
+2025-06-12T19:56:39.958-03:00  INFO 49814 --- [amazonas-e-commerce] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 3001 (http)
+2025-06-12T19:56:39.980-03:00  INFO 49814 --- [amazonas-e-commerce] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-06-12T19:56:39.981-03:00  INFO 49814 --- [amazonas-e-commerce] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-06-12T19:56:40.075-03:00  INFO 49814 --- [amazonas-e-commerce] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-06-12T19:56:40.076-03:00  INFO 49814 --- [amazonas-e-commerce] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2081 ms
+2025-06-12T19:56:40.320-03:00  INFO 49814 --- [amazonas-e-commerce] [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-12T19:56:40.373-03:00  INFO 49814 --- [amazonas-e-commerce] [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.15.Final
+2025-06-12T19:56:40.410-03:00  INFO 49814 --- [amazonas-e-commerce] [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-12T19:56:40.765-03:00  INFO 49814 --- [amazonas-e-commerce] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-12T19:56:40.802-03:00  INFO 49814 --- [amazonas-e-commerce] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-06-12T19:56:41.281-03:00  INFO 49814 --- [amazonas-e-commerce] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@64757d56
+2025-06-12T19:56:41.284-03:00  INFO 49814 --- [amazonas-e-commerce] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-06-12T19:56:41.396-03:00  WARN 49814 --- [amazonas-e-commerce] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-06-12T19:56:41.398-03:00  WARN 49814 --- [amazonas-e-commerce] [main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-06-12T19:56:41.422-03:00  INFO 49814 --- [amazonas-e-commerce] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-06-12T19:56:42.393-03:00  INFO 49814 --- [amazonas-e-commerce] [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-12T19:56:42.572-03:00  INFO 49814 --- [amazonas-e-commerce] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-12T19:56:42.976-03:00  WARN 49814 --- [amazonas-e-commerce] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-12T19:56:43.015-03:00  WARN 49814 --- [amazonas-e-commerce] [main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: bf283e38-cf77-42a1-80a5-f6cbd4088019
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2025-06-12T19:56:43.035-03:00  INFO 49814 --- [amazonas-e-commerce] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-06-12T19:56:43.589-03:00  INFO 49814 --- [amazonas-e-commerce] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 3001 (http) with context path '/'
+2025-06-12T19:56:43.625-03:00  INFO 49814 --- [amazonas-e-commerce] [main] c.a.a.a.AmazonasECommerceApplication     : Started AmazonasECommerceApplication in 6.839 seconds (process running for 7.426)
+2025-06-12T19:56:55.755-03:00  INFO 49814 --- [amazonas-e-commerce] [http-nio-3001-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-12T19:56:55.756-03:00  INFO 49814 --- [amazonas-e-commerce] [http-nio-3001-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-06-12T19:56:55.759-03:00  INFO 49814 --- [amazonas-e-commerce] [http-nio-3001-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
