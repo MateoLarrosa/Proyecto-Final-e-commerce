@@ -2,14 +2,20 @@
   "users": [
     {
       "id": "1",
-      "name": "Juan Pérez",
+      "username": "juanperez",
       "email": "juan@example.com",
+      "password": "juan123",
+      "nombre": "Juan",
+      "apellido": "Pérez",
       "role": "Administrador"
     },
     {
       "id": "2",
-      "name": "Ana Gómez",
+      "username": "maria123",
       "email": "ana@example.com",
+      "password": "maria123",
+      "nombre": "Ana",
+      "apellido": "Gómez",
       "role": "Cliente"
     },
     {
