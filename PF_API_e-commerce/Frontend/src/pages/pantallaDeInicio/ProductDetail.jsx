@@ -1,7 +1,7 @@
 // ProductDetails.js
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import './ProductDetail.css'; // Asegúrate de tener un archivo de estilos
+import './ProductDetail.css';
 
 const ProductDetails = () => {
     const { id } = useParams();
@@ -29,21 +29,17 @@ const ProductDetails = () => {
 
                 const fetchedProduct = await response.json();
 
-                // *** INICIO DE MODIFICACIÓN: Mapear los datos ***
+                // Transformar los datos recibidos
                 const transformedProduct = {
                     id: fetchedProduct.id,
-                    title: fetchedProduct.nombre,       // Mapear nombre a title
-                    price: fetchedProduct.precio,       // Mapear precio a price
-                    category: fetchedProduct.categoria, // Mapear categoria a category
-                    image: fetchedProduct.imagen,       // Mapear imagen a image
-                    // Aquí sí podrías tener un campo 'descripcion' más detallado en tu JSON.
-                    // Si no, usa 'nombre' o el campo que corresponda.
-                    description: fetchedProduct.descripcion_detallada || fetchedProduct.nombre,
+                    title: fetchedProduct.title,
+                    price: fetchedProduct.price,
+                    category: fetchedProduct.category,
+                    image: fetchedProduct.image,
+                    description: fetchedProduct.description || fetchedProduct.title,
                     stock: fetchedProduct.stock
-                    // Agrega cualquier otro campo que necesites y mapea si es necesario
                 };
                 setProduct(transformedProduct);
-                // *** FIN DE MODIFICACIÓN ***
 
             } catch (err) {
                 setError(`Error al cargar el producto: ${err.message}`);
@@ -107,19 +103,16 @@ const ProductDetails = () => {
         return <div>Producto no encontrado.</div>;
     }
 
-    // Ahora el JSX usará los campos mapeados: product.image, product.title, etc.
     return (
         <div className="product-details-container">
             <div className="product-details">
                 <div className="product-images">
                     <img src={product.image} alt={product.title} className="product-image" />
                 </div>
-
                 <div className="product-info">
                     <h2 className="product-title">{product.title}</h2>
                     <p className="product-description">{product.description}</p>
                     <p className="product-price"><strong>${String(product.price)}</strong></p>
-
                     <div className="buttons-container">
                         <button className="add-to-cart" onClick={addToCart}>Agregar al carrito</button>
                         {isAdmin && (

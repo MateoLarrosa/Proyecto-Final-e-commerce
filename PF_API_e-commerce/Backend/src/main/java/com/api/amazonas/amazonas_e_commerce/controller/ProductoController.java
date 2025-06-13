@@ -4,18 +4,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import com.api.amazonas.amazonas_e_commerce.model.Producto;
-import com.api.amazonas.amazonas_e_commerce.service.ProductoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
+import com.api.amazonas.amazonas_e_commerce.model.Producto;
+import com.api.amazonas.amazonas_e_commerce.service.ProductoService;
+
 @RestController
-@RequestMapping("/api/productos")
+@RequestMapping("/productos")
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class ProductoController {
-    
+
     @Autowired
     private ProductoService productoService;
 
@@ -33,7 +36,7 @@ public class ProductoController {
         }
         return convertToFrontendFormat(producto);
     }
-    
+
     @PostMapping
     public Map<String, Object> addProducto(@RequestBody Map<String, Object> frontendProducto) {
         Producto producto = convertToBackendFormat(frontendProducto);
@@ -57,6 +60,16 @@ public class ProductoController {
         productoService.deleteProducto(id);
     }
 
+    @PostMapping("/descontar-stock")
+    public ResponseEntity<?> descontarStockMultiple(@RequestBody List<Producto> productos) {
+        boolean exito = productoService.descontarStockMultiple(productos);
+        if (exito) {
+            return ResponseEntity.ok().body("Stock actualizado correctamente");
+        } else {
+            return ResponseEntity.badRequest().body("Error: producto no encontrado o stock insuficiente");
+        }
+    }
+
     private Map<String, Object> convertToFrontendFormat(Producto producto) {
         Map<String, Object> frontendFormat = new HashMap<>();
         frontendFormat.put("id", producto.getId());
@@ -66,7 +79,7 @@ public class ProductoController {
         frontendFormat.put("category", producto.getCategoria());
         frontendFormat.put("image", producto.getImagen());
         frontendFormat.put("userId", producto.getUserId());
-        frontendFormat.put("description", producto.getNombre()); // Usando nombre como descripción por defecto
+        frontendFormat.put("description", producto.getNombre()); // Se usa el nombre como descripción por defecto
         return frontendFormat;
     }
 
@@ -93,8 +106,8 @@ public class ProductoController {
 
     private int parseNumber(Object frontendValue, Object backendValue) {
         if (frontendValue != null) {
-            if (frontendValue instanceof Number number) {
-                return number.intValue();
+            if (frontendValue instanceof Number) {
+                return ((Number) frontendValue).intValue();
             }
             try {
                 return Integer.parseInt(frontendValue.toString());
@@ -104,8 +117,8 @@ public class ProductoController {
             }
         }
         if (backendValue != null) {
-            if (backendValue instanceof Number number) {
-                return number.intValue();
+            if (backendValue instanceof Number) {
+                return ((Number) backendValue).intValue();
             }
             return Integer.parseInt(backendValue.toString());
         }

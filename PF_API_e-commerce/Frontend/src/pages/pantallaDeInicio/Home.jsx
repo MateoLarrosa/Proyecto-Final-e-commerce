@@ -8,7 +8,7 @@ import NuevoNavBar from "../../Components/NuevoNavBar";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Home.css";
 
-const API_URL = "http://localhost:8080/api/productos";
+const API_URL = "http://localhost:3001/productos";
 
 const Home = () => {
     const location = useLocation();
@@ -39,11 +39,11 @@ const Home = () => {
 
             const transformedData = data.map(prod => ({
                 id: prod.id,
-                title: prod.title, // Cambiado de prod.nombre a prod.title
-                price: prod.price, // Cambiado de prod.precio a prod.price
-                category: prod.category, // Cambiado de prod.categoria a prod.category
-                image: prod.image, // Cambiado de prod.imagen a prod.image
-                description: prod.description, // Usar prod.description directamente
+                title: prod.title,
+                price: prod.price,
+                category: prod.category,
+                image: prod.imagen || prod.image, // Usar directamente la imagen sin transformación
+                description: prod.description || prod.title,
                 stock: prod.stock
             }));
             setProducts(transformedData);

@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './resumenCarritoStyles.module.css';
 
+// Cambia la URL al backend real
 const API_URL = "http://localhost:3001/productos";
 
 const ResumenCarrito = ({ total, productos = [] }) => {
@@ -9,29 +10,24 @@ const ResumenCarrito = ({ total, productos = [] }) => {
 
   const actualizarStock = async () => {
     try {
-      // Para cada producto en el carrito
-      for (const producto of productos) {
-        // Obtener el producto actual de la base de datos
-        const response = await fetch(`${API_URL}/${producto.id}`);
-        if (!response.ok) throw new Error(`Error al obtener producto ${producto.id}`);
-        const productoActual = await response.json();
-
-        // Calcular nuevo stock
-        const nuevoStock = productoActual.stock - producto.cantidad;
-
-        // Actualizar el producto con el nuevo stock
-        const updateResponse = await fetch(`${API_URL}/${producto.id}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            stock: nuevoStock
-          })
-        });
-
-        if (!updateResponse.ok) throw new Error(`Error al actualizar stock del producto ${producto.id}`);
-      }
+      // Prepara el array de productos completos para descontar stock
+      const productosParaDescontar = productos.map(p => ({
+        id: p.id,
+        nombre: p.nombre || p.title,
+        precio: p.precio || p.price,
+        stock: p.cantidad, // cantidad a descontar
+        categoria: p.categoria || p.category,
+        imagen: p.imagen || p.image,
+        userId: p.userId
+      }));
+      const response = await fetch(`${API_URL}/descontar-stock`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(productosParaDescontar)
+      });
+      if (!response.ok) throw new Error('Error al descontar stock');
       return true;
     } catch (error) {
       console.error('Error al actualizar stock:', error);
