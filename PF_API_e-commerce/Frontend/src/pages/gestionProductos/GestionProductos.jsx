@@ -46,17 +46,20 @@ function GestionProductos() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${API_URL}?userId=${currentUser.id}&_sort=nombre&_order=asc`);
+      const response = await fetch(API_URL);
       if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
       const data = await response.json();
-      setProductos(data);
+      // Ordenar los productos por nombre
+      const sortedData = data.sort((a, b) => a.title.localeCompare(b.title));
+      setProductos(sortedData);
+      setFilteredProductos(sortedData);
     } catch (err) {
       setError(`Error al cargar productos: ${err.message}`);
       console.error(err);
     } finally {
       setLoading(false);
     }
-  }, [currentUser?.id]); // Solo depende del ID del usuario
+  }, [currentUser]);
 
   // Cargar productos solo cuando cambie el ID del usuario
   useEffect(() => {
@@ -75,8 +78,8 @@ function GestionProductos() {
     }
 
     const filtered = productos.filter(producto => 
-      producto.nombre.toLowerCase().includes(term) ||
-      producto.categoria.toLowerCase().includes(term)
+      producto.title.toLowerCase().includes(term) ||
+      producto.category.toLowerCase().includes(term)
     );
     setFilteredProductos(filtered);
   };
@@ -261,11 +264,11 @@ function GestionProductos() {
                 {currentRows.map((prod) => (
                   <TableRow key={prod.id} hover className="tableRow">
                     <TableCell component="th" scope="row" className="tableBodyCell">
-                      {prod.nombre}
+                      {prod.title}
                     </TableCell>
-                    <TableCell className="tableBodyCell">{prod.categoria}</TableCell>
+                    <TableCell className="tableBodyCell">{prod.category}</TableCell>
                     <TableCell className="tableBodyCell" align="right">
-                      ${typeof prod.precio === 'number' ? prod.precio.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'N/A'}
+                      ${typeof prod.price === 'number' ? prod.price.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'N/A'}
                     </TableCell>
                     <TableCell className="tableBodyCell" align="center">
                       {getStockChip(prod.stock)}
