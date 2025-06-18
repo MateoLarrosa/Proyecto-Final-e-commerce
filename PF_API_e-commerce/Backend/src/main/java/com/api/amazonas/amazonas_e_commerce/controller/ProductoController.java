@@ -15,7 +15,7 @@ import com.api.amazonas.amazonas_e_commerce.model.Producto;
 import com.api.amazonas.amazonas_e_commerce.service.ProductoService;
 
 @RestController
-@RequestMapping("/productos")
+@RequestMapping("/api/productos")
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class ProductoController {
 

@@ -13,7 +13,7 @@ import NuevoNavBar from '../../Components/NuevoNavBar';
 import Footer from '../../Components/Footer';
 import ProductoFormDialog from './ProductoFormDialog';
 
-const API_URL = 'http://localhost:3001/productos';
+const API_URL = 'http://localhost:3001/api/productos';
 
 function GestionProductos() {
   const [productos, setProductos] = useState([]);
@@ -41,12 +41,12 @@ function GestionProductos() {
 
   // Función para obtener productos de la API
   const fetchProductos = useCallback(async () => {
-    if (!currentUser?.id) return;
-
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(API_URL);
+      const token = currentUser?.token;
+      const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+      const response = await fetch(API_URL, { headers });
       if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
       const data = await response.json();
       // Ordenar los productos por nombre
@@ -55,6 +55,8 @@ function GestionProductos() {
       setFilteredProductos(sortedData);
     } catch (err) {
       setError(`Error al cargar productos: ${err.message}`);
+      setProductos([]);
+      setFilteredProductos([]);
       console.error(err);
     } finally {
       setLoading(false);

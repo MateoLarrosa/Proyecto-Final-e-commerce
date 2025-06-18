@@ -21,7 +21,7 @@ const ProductDetails = () => {
             setLoading(true); // Inicia la carga aquí también
             setError(null);  // Resetea el error
             try {
-                const response = await fetch(`http://localhost:3001/productos/${id}`);
+                const response = await fetch(`http://localhost:3001/api/productos/${id}`);
                 
                 if (!response.ok) {
                     throw new Error(`Error HTTP: ${response.status}`);
