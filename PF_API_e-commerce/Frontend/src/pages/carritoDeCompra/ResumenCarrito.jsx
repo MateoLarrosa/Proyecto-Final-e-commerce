@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './resumenCarritoStyles.module.css';
 
 // Cambia la URL al backend real
-const API_URL = "http://localhost:3001/productos";
+const API_URL = "http://localhost:8080/productos";
 
 const ResumenCarrito = ({ total, productos = [] }) => {
   const navigate = useNavigate();

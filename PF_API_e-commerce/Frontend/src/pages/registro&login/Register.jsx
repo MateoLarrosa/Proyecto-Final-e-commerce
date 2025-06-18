@@ -3,7 +3,7 @@ import NuevoNavBar from "../../Components/NuevoNavBar";
 import Footer from "../../Components/Footer";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:3001/users";
+const API_URL = "http://localhost:8080/users";
 
 const Register = () => {
   const navigate = useNavigate();

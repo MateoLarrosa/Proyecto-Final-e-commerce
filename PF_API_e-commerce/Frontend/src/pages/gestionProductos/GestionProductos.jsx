@@ -8,12 +8,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import SearchIcon from '@mui/icons-material/Search';
-import './gestionProductosStyles.css';
+import './GestionProductosStyles.css';
 import NuevoNavBar from '../../Components/NuevoNavBar';
 import Footer from '../../Components/Footer';
 import ProductoFormDialog from './ProductoFormDialog';
 
-const API_URL = 'http://localhost:3001/productos';
+const API_URL = 'http://localhost:8080/productos';
 
 function GestionProductos() {
   const [productos, setProductos] = useState([]);

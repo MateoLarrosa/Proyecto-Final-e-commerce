@@ -65,7 +65,7 @@ const TusDirecciones = () => {
         }
 
         // Ejecuto la peticion PATCH para actualizar los datos...
-        const res = await fetch(`http://localhost:3001/users/${userData.id}`,{
+        const res = await fetch(`http://localhost:8080/users/${userData.id}`,{
             method: "PATCH",
             headers: {"Content-Type":"application/json"},
             body: JSON.stringify(updatedUser)
