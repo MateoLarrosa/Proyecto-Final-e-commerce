@@ -13,7 +13,7 @@ import NuevoNavBar from '../../Components/NuevoNavBar';
 import Footer from '../../Components/Footer';
 import ProductoFormDialog from './ProductoFormDialog';
 
-const API_URL = 'http://localhost:3001/api/productos';
+const API_URL = 'http://localhost:3001/api/productos/gestion';
 
 function GestionProductos() {
   const [productos, setProductos] = useState([]);
@@ -44,7 +44,10 @@ function GestionProductos() {
     setLoading(true);
     setError(null);
     try {
-      const token = currentUser?.token;
+      // Obtener el usuario y token más actualizados de localStorage
+      const userString = localStorage.getItem('user');
+      const user = userString ? JSON.parse(userString) : null;
+      const token = user?.token;
       const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
       const response = await fetch(API_URL, { headers });
       if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
@@ -61,7 +64,7 @@ function GestionProductos() {
     } finally {
       setLoading(false);
     }
-  }, [currentUser]);
+  }, []); // Sin dependencias para que siempre lea el usuario actualizado
 
   // Cargar productos solo cuando cambie el ID del usuario
   useEffect(() => {
@@ -183,27 +186,36 @@ function GestionProductos() {
   };
 
   const handleDeleteProducto = async (id) => {
-    // Confirmación antes de eliminar
-    if (!window.confirm('¿Estás seguro de que quieres eliminar este producto?')) {
-      return;
+  if (!window.confirm('¿Estás seguro de que quieres eliminar este producto?')) return;
+
+  setLoading(true);
+  setError(null);
+
+  try {
+    // Obtener token del usuario autenticado
+    const userString = localStorage.getItem('user');
+    const user = userString ? JSON.parse(userString) : null;
+    const token = user?.token;
+
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: 'DELETE',
+      headers
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
     }
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(`${API_URL}/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-      await fetchProductos(); // Recargar productos
-    } catch (err) {
-      setError(`Error al eliminar producto: ${err.message}`);
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+
+    await fetchProductos();
+  } catch (err) {
+    setError(`Error al eliminar producto: ${err.message}`);
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
 
 
   return (

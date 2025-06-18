@@ -122,29 +122,28 @@ public class UsuarioService {
 
     // Login
     public Map<String, Object> login(String email, String password) {
-        // Autenticar usuario
-        authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(email, password)
-        );
-        
-        // Si la autenticación es exitosa, obtener el usuario
-        Usuario usuario = usuarioRepository.findByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        
-        // Generar token JWT
-        String token = jwtService.generateToken(usuario);
-        
-        // Devolver usuario y token
-        Map<String, Object> response = new HashMap<>();
-        response.put("token", token);
-        response.put("user", Map.of(
-            "id", usuario.getId(),
-            "nombre", usuario.getNombre(),
-            "apellido", usuario.getApellido(),
-            "email", usuario.getEmail(),
-            "role", usuario.getRole()
-        ));
-        
-        return response;
-    }
+    System.out.println("Intentando login para email: " + email);
+    Usuario usuario = usuarioRepository.findByEmail(email)
+        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    System.out.println("Usuario encontrado: " + usuario.getEmail() + " Pass hash: " + usuario.getPassword());
+    
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(email, password)
+    );
+    System.out.println("Autenticación exitosa");
+
+    String token = jwtService.generateToken(usuario);
+    
+    Map<String, Object> response = new HashMap<>();
+    response.put("token", token);
+    response.put("user", Map.of(
+        "id", usuario.getId(),
+        "nombre", usuario.getNombre(),
+        "apellido", usuario.getApellido(),
+        "email", usuario.getEmail(),
+        "role", usuario.getRole()
+    ));
+    
+    return response;
+}
 }

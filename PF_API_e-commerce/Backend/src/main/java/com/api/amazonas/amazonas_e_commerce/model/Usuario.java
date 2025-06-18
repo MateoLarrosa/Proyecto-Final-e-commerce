@@ -1,6 +1,7 @@
 package com.api.amazonas.amazonas_e_commerce.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-// import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -23,50 +23,46 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     
+    @NotBlank(message = "El username no puede estar vacío")
     @Column(nullable = false, unique = true)
     private String username;
     
+    @NotBlank(message = "El email no puede estar vacío")
+    @Email(message = "El email debe ser válido")
     @Column(nullable = false, unique = true)
     private String email;
     
+    @NotBlank(message = "La contraseña no puede estar vacía")
     @Column(nullable = false)
     private String password;
     
+    @NotBlank(message = "El nombre no puede estar vacío")
     @Column(nullable = false)
     private String nombre;
     
+    @NotBlank(message = "El apellido no puede estar vacío")
     @Column(nullable = false)
     private String apellido;
     
     @Column(nullable = false)
     private String role = "Cliente";
     
-    // Campos opcionales para la información adicional del perfil
-    @Column(name = "edad")
     private String edad;
-    
-    @Column(name = "telefono")
     private String telefono;
-    
-    @Column(name = "indicativo")
     private String indicativo;
-    
-    // Campos para la dirección
-    @Column(name = "calle_y_altura")
     private String calleYAltura;
-    
-    @Column(name = "provincia")
     private String provincia;
-    
-    @Column(name = "ciudad")
     private String ciudad;
-    
-    @Column(name = "codigo_postal")
     private String codigoPostal;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     @Override
