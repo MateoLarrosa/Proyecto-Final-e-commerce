@@ -3,7 +3,7 @@ import NuevoNavBar from "../../Components/NuevoNavBar";
 import Footer from "../../Components/Footer";
 import { useNavigate } from "react-router-dom";
 
-const API_URL = "http://localhost:8080/users";
+const API_URL = "http://localhost:8080/api/users";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -23,25 +23,29 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Verifica si el email ya existe
-    const res = await fetch(`${API_URL}?email=${form.email}`);
-    const users = await res.json();
-    if (users.length > 0) {
-      setMsg("El email ya está registrado.");
-      return;
+    try {
+      const res = await fetch(`${API_URL}/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form)
+      });
+
+      const data = await res.json();
+      
+      if (res.ok) {
+        setMsg("Usuario registrado correctamente.");
+        setForm({ username: "", email: "", password: "", nombre: "", apellido: "", role: "Cliente" });
+        // Redireccionar a login después de 1.5 segundos
+        setTimeout(() => {
+          navigate("/login-user");
+        }, 1500);
+      } else {
+        setMsg(data.message || "Error al registrar usuario.");
+      }
+    } catch (error) {
+      console.error('Error de conexión:', error);
+      setMsg("Error al conectar con el servidor. Intente de nuevo.");
     }
-    // Guarda el usuario
-    await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form)
-    });
-    setMsg("Usuario registrado correctamente.");
-    setForm({ username: "", email: "", password: "", nombre: "", apellido: "", role: "Cliente" });
-    // Redireccionar a login después de 1.5 segundos
-    setTimeout(() => {
-      navigate("/login-user");
-    }, 1500);
   };
 
   return (
