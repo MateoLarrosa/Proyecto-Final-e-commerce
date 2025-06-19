@@ -26,8 +26,28 @@ const InfoLoginYSeguridad = () => {
 
     
     useEffect(() => {
+        // Buscar usuario por email si no hay id
         const userData = JSON.parse(localStorage.getItem("user"));
-        if (userData){
+        const token = localStorage.getItem("token");
+        if (userData && userData.email && token) {
+            fetch(`http://localhost:8080/api/users/email/${userData.email}`, {
+                headers: { "Authorization": `Bearer ${token}` }
+            })
+            .then(res => res.ok ? res.json() : null)
+            .then(data => {
+                if (data) {
+                    setUser(data);
+                    setFormData({
+                        nombre: data.nombre || "",
+                        apellido: data.apellido || "",
+                        edad: data.edad || "",
+                        email: data.email || "",
+                        indicativo: data.indicativo || "",
+                        telefono: data.telefono || ""
+                    });
+                }
+            });
+        } else if (userData) {
             setUser(userData);
             setFormData({
                 nombre: userData.nombre || "",

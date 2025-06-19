@@ -13,7 +13,10 @@ import NuevoNavBar from '../../Components/NuevoNavBar';
 import Footer from '../../Components/Footer';
 import ProductoFormDialog from './ProductoFormDialog';
 
-const API_URL = 'http://localhost:8080/api/productos/gestion';
+/* const API_URL = 'http://localhost:8080/api/productos/gestion'; --- por ahora no la usamos mas */ 
+const API_GESTION_URL = 'http://localhost:8080/api/productos/gestion'; // Para obtener la lista
+const API_PRODUCTOS_URL = 'http://localhost:8080/api/productos'; // Para Crear, Editar, Eliminar
+
 
 function GestionProductos() {
   const [productos, setProductos] = useState([]);
@@ -49,7 +52,8 @@ function GestionProductos() {
       const user = userString ? JSON.parse(userString) : null;
       const token = user?.token;
       const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
-      const response = await fetch(API_URL, { headers });
+      /* const response = await fetch(API_URL, { headers }); --- por ahora no la usamos mas */
+      const response = await fetch(API_GESTION_URL, { headers });
       if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
       const data = await response.json();
       // Ordenar los productos por nombre
@@ -149,28 +153,36 @@ function GestionProductos() {
       setError('No hay usuario autenticado');
       return;
     }
-
+  
     setLoading(true);
     setError(null);
+  
+    // URL CORRECTA
     const method = isEditMode ? 'PUT' : 'POST';
-    const url = isEditMode ? `${API_URL}/${productoData.id}` : API_URL;
-
-    // Agregar el userId al producto
+    const url = isEditMode ? `<span class="math-inline">\{API\_PRODUCTOS\_URL\}/</span>{productoData.id}` : API_PRODUCTOS_URL;
+  
     const dataToSend = {
       ...productoData,
       userId: currentUser.id,
       precio: parseFloat(productoData.precio),
       stock: parseInt(productoData.stock, 10),
     };
-
+  
+    // TOKEN DE AUTORIZACIÓN PRESENTE
+    const userString = localStorage.getItem('user');
+    const user = userString ? JSON.parse(userString) : null;
+    const token = user?.token;
+  
     try {
       const response = await fetch(url, {
         method: method,
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Header de autorización
         },
         body: JSON.stringify(dataToSend),
       });
+  
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || `Error HTTP: ${response.status}`);
@@ -199,7 +211,7 @@ function GestionProductos() {
 
     const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
 
-    const response = await fetch(`${API_URL}/${id}`, {
+    const response = await fetch(`${API_PRODUCTOS_URL}/${id}`, {
       method: 'DELETE',
       headers
     });

@@ -54,12 +54,19 @@ public class ProductoController {
             // Para el ADMIN, se obtienen todos los productos. Esto es correcto.
             productos = productoService.getAllProductos();
         } else {
-            // --- ESTE ES EL CAMBIO IMPORTANTE ---
-            // Para el CLIENTE, buscamos directamente sus productos en la base de datos.
+            // --- OBTENER PRODUCTOS DEL CLIENTE AUTENTICADO ---
             var usuario = productoService.obtenerUsuarioPorEmail(email);
-            System.out.println("[DEBUG] Buscando productos para Usuario ID: " + usuario.getId());
-            // Usamos el método que ya tienes en tu servicio, que es mucho más eficiente.
-            productos = productoService.getProductosByUsuario(usuario); 
+            if (usuario == null) {
+                System.out.println("[DEBUG] Usuario no encontrado para email: " + email);
+                productos = List.of();
+            } else {
+                System.out.println("[DEBUG] Buscando productos para Usuario ID: " + usuario.getId());
+                productos = productoService.getProductosByUsuario(usuario);
+                System.out.println("[DEBUG] Productos encontrados para usuario " + usuario.getId() + ":");
+                for (Producto p : productos) {
+                    System.out.println("[DEBUG] Producto: " + p.getId() + ", userId: " + p.getUserId() + ", nombre: " + p.getNombre());
+                }
+            }
         }
 
         System.out.println("[DEBUG] Productos devueltos: " + productos.size());
