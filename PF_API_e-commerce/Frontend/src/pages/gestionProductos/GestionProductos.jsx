@@ -8,12 +8,15 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import SearchIcon from '@mui/icons-material/Search';
-import './gestionProductosStyles.css';
+import './GestionProductosStyles.css';
 import NuevoNavBar from '../../Components/NuevoNavBar';
 import Footer from '../../Components/Footer';
 import ProductoFormDialog from './ProductoFormDialog';
 
-const API_URL = 'http://localhost:3001/productos';
+/* const API_URL = 'http://localhost:8080/api/productos/gestion'; --- por ahora no la usamos mas */ 
+const API_GESTION_URL = 'http://localhost:8080/api/productos/gestion'; // Para obtener la lista
+const API_PRODUCTOS_URL = 'http://localhost:8080/api/productos'; // Para Crear, Editar, Eliminar
+
 
 function GestionProductos() {
   const [productos, setProductos] = useState([]);
@@ -41,12 +44,16 @@ function GestionProductos() {
 
   // Función para obtener productos de la API
   const fetchProductos = useCallback(async () => {
-    if (!currentUser?.id) return;
-
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(API_URL);
+      // Obtener el usuario y token más actualizados de localStorage
+      const userString = localStorage.getItem('user');
+      const user = userString ? JSON.parse(userString) : null;
+      const token = user?.token;
+      const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+      /* const response = await fetch(API_URL, { headers }); --- por ahora no la usamos mas */
+      const response = await fetch(API_GESTION_URL, { headers });
       if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
       const data = await response.json();
       // Ordenar los productos por nombre
@@ -55,11 +62,13 @@ function GestionProductos() {
       setFilteredProductos(sortedData);
     } catch (err) {
       setError(`Error al cargar productos: ${err.message}`);
+      setProductos([]);
+      setFilteredProductos([]);
       console.error(err);
     } finally {
       setLoading(false);
     }
-  }, [currentUser]);
+  }, []); // Sin dependencias para que siempre lea el usuario actualizado
 
   // Cargar productos solo cuando cambie el ID del usuario
   useEffect(() => {
@@ -144,28 +153,37 @@ function GestionProductos() {
       setError('No hay usuario autenticado');
       return;
     }
-
+  
     setLoading(true);
     setError(null);
+  
+    // URL CORRECTA
     const method = isEditMode ? 'PUT' : 'POST';
-    const url = isEditMode ? `${API_URL}/${productoData.id}` : API_URL;
-
-    // Agregar el userId al producto
+    // VERSIÓN CORRECTA (con backticks)
+    const url = isEditMode ? `${API_PRODUCTOS_URL}/${productoData.id}` : API_PRODUCTOS_URL;
+  
     const dataToSend = {
       ...productoData,
       userId: currentUser.id,
       precio: parseFloat(productoData.precio),
       stock: parseInt(productoData.stock, 10),
     };
-
+  
+    // TOKEN DE AUTORIZACIÓN PRESENTE
+    const userString = localStorage.getItem('user');
+    const user = userString ? JSON.parse(userString) : null;
+    const token = user?.token;
+  
     try {
       const response = await fetch(url, {
         method: method,
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Header de autorización
         },
         body: JSON.stringify(dataToSend),
       });
+  
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || `Error HTTP: ${response.status}`);
@@ -181,27 +199,36 @@ function GestionProductos() {
   };
 
   const handleDeleteProducto = async (id) => {
-    // Confirmación antes de eliminar
-    if (!window.confirm('¿Estás seguro de que quieres eliminar este producto?')) {
-      return;
+  if (!window.confirm('¿Estás seguro de que quieres eliminar este producto?')) return;
+
+  setLoading(true);
+  setError(null);
+
+  try {
+    // Obtener token del usuario autenticado
+    const userString = localStorage.getItem('user');
+    const user = userString ? JSON.parse(userString) : null;
+    const token = user?.token;
+
+    const headers = token ? { 'Authorization': `Bearer ${token}` } : {};
+
+    const response = await fetch(`${API_PRODUCTOS_URL}/${id}`, {
+      method: 'DELETE',
+      headers
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
     }
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(`${API_URL}/${id}`, {
-        method: 'DELETE',
-      });
-      if (!response.ok) {
-        throw new Error(`Error HTTP: ${response.status}`);
-      }
-      await fetchProductos(); // Recargar productos
-    } catch (err) {
-      setError(`Error al eliminar producto: ${err.message}`);
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+
+    await fetchProductos();
+  } catch (err) {
+    setError(`Error al eliminar producto: ${err.message}`);
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
 
 
   return (

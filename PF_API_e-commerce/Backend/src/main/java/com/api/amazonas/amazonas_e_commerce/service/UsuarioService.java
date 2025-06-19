@@ -2,22 +2,30 @@ package com.api.amazonas.amazonas_e_commerce.service;
 
 import com.api.amazonas.amazonas_e_commerce.model.Usuario;
 import com.api.amazonas.amazonas_e_commerce.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.api.amazonas.security.service.JwtService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UsuarioService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
     // Crear nuevo usuario
-    public Usuario crearUsuario(Usuario usuario) {
-        // Validar que el email no esté registrado (como lo hace el frontend)
+    public Map<String, Object> crearUsuario(Usuario usuario) {
+        // Validar que el email no esté registrado
         if (usuarioRepository.existsByEmail(usuario.getEmail())) {
             throw new RuntimeException("El email ya está registrado.");
         }
@@ -27,7 +35,27 @@ public class UsuarioService {
             usuario.setRole("Cliente");
         }
         
-        return usuarioRepository.save(usuario);
+        // Codificar la contraseña antes de guardar
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        
+        // Guardar el usuario
+        Usuario savedUsuario = usuarioRepository.save(usuario);
+        
+        // Generar token JWT
+        String token = jwtService.generateToken(savedUsuario);
+        
+        // Devolver usuario y token
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", token);
+        response.put("user", Map.of(
+            "id", savedUsuario.getId(),
+            "nombre", savedUsuario.getNombre(),
+            "apellido", savedUsuario.getApellido(),
+            "email", savedUsuario.getEmail(),
+            "role", savedUsuario.getRole()
+        ));
+        
+        return response;
     }
 
     // Obtener todos los usuarios
@@ -59,7 +87,7 @@ public class UsuarioService {
                     usuario.setEmail(usuarioActualizado.getEmail());
                 }
                 if (usuarioActualizado.getPassword() != null) {
-                    usuario.setPassword(usuarioActualizado.getPassword());
+                    usuario.setPassword(passwordEncoder.encode(usuarioActualizado.getPassword()));
                 }
                 if (usuarioActualizado.getEdad() != null) {
                     usuario.setEdad(usuarioActualizado.getEdad());
@@ -90,24 +118,32 @@ public class UsuarioService {
     // Eliminar usuario
     public void eliminarUsuario(String id) {
         usuarioRepository.deleteById(id);
-    }    // Login
-    public Optional<Map<String, Object>> login(String email, String password) {
-        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(email);
-        
-        if (usuarioOpt.isPresent()) {
-            Usuario usuario = usuarioOpt.get();
-            if (usuario.getPassword().equals(password)) {
-                // Return user info without password
-                Map<String, Object> userInfo = Map.of(
-                    "id", usuario.getId(),
-                    "nombre", usuario.getNombre(),
-                    "apellido", usuario.getApellido(),
-                    "email", usuario.getEmail(),
-                    "role", usuario.getRole()
-                );
-                return Optional.of(userInfo);
-            }
-        }
-        return Optional.empty();
     }
+
+    // Login
+    public Map<String, Object> login(String email, String password) {
+    System.out.println("Intentando login para email: " + email);
+    Usuario usuario = usuarioRepository.findByEmail(email)
+        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    System.out.println("Usuario encontrado: " + usuario.getEmail() + " Pass hash: " + usuario.getPassword());
+    
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(email, password)
+    );
+    System.out.println("Autenticación exitosa");
+
+    String token = jwtService.generateToken(usuario);
+    
+    Map<String, Object> response = new HashMap<>();
+    response.put("token", token);
+    response.put("user", Map.of(
+        "id", usuario.getId(),
+        "nombre", usuario.getNombre(),
+        "apellido", usuario.getApellido(),
+        "email", usuario.getEmail(),
+        "role", usuario.getRole()
+    ));
+    
+    return response;
+}
 }

@@ -5,29 +5,76 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 
 import com.api.amazonas.amazonas_e_commerce.model.Producto;
 import com.api.amazonas.amazonas_e_commerce.service.ProductoService;
 
 @RestController
-@RequestMapping("/productos")
+@RequestMapping("/api/productos")
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class ProductoController {
 
     @Autowired
     private ProductoService productoService;
 
+    // Endpoint público para el Home
     @GetMapping
     public List<Map<String, Object>> getAllProductos() {
-        List<Producto> productos = productoService.getAllProductos();
-        return productos.stream().map(this::convertToFrontendFormat).collect(Collectors.toList());
+        return productoService.getAllProductos().stream()
+                .map(this::convertToFrontendFormat)
+                .collect(Collectors.toList());
     }
 
+    // Endpoint protegido para gestión de productos
+     @GetMapping("/gestion")
+    public List<Map<String, Object>> getProductosGestion(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            System.out.println("[DEBUG] No autenticado");
+            return List.of();
+        }
+
+        String email = authentication.getName();
+        boolean isAdmin = authentication.getAuthorities().stream()
+            .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMINISTRADOR"));
+        
+        System.out.println("[DEBUG] Email: " + email + ", isAdmin: " + isAdmin);
+        
+        List<Producto> productos;
+
+        if (isAdmin) {
+            // Para el ADMIN, se obtienen todos los productos. Esto es correcto.
+            productos = productoService.getAllProductos();
+        } else {
+            // --- OBTENER PRODUCTOS DEL CLIENTE AUTENTICADO ---
+            var usuario = productoService.obtenerUsuarioPorEmail(email);
+            if (usuario == null) {
+                System.out.println("[DEBUG] Usuario no encontrado para email: " + email);
+                productos = List.of();
+            } else {
+                System.out.println("[DEBUG] Buscando productos para Usuario ID: " + usuario.getId());
+                productos = productoService.getProductosByUsuario(usuario);
+                System.out.println("[DEBUG] Productos encontrados para usuario " + usuario.getId() + ":");
+                for (Producto p : productos) {
+                    System.out.println("[DEBUG] Producto: " + p.getId() + ", userId: " + p.getUserId() + ", nombre: " + p.getNombre());
+                }
+            }
+        }
+
+        System.out.println("[DEBUG] Productos devueltos: " + productos.size());
+
+        return productos.stream()
+                .map(this::convertToFrontendFormat)
+                .collect(Collectors.toList());
+    }
     @GetMapping("/{id}")
     public Map<String, Object> getProductoById(@PathVariable String id) {
         Producto producto = productoService.getProductoById(id);
@@ -38,26 +85,66 @@ public class ProductoController {
     }
 
     @PostMapping
-    public Map<String, Object> addProducto(@RequestBody Map<String, Object> frontendProducto) {
-        Producto producto = convertToBackendFormat(frontendProducto);
-        Producto saved = productoService.saveProducto(producto);
-        return convertToFrontendFormat(saved);
+    public ResponseEntity<?> addProducto(@RequestBody Map<String, Object> frontendProducto) {
+        try {
+            Producto producto = convertToBackendFormat(frontendProducto);
+            Producto saved = productoService.saveProducto(producto);
+            return ResponseEntity.ok(convertToFrontendFormat(saved));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("message", "Error al guardar producto: " + e.getMessage()));
+        }
+    }
+
+    @PostMapping("/gestion")
+    public ResponseEntity<?> addProductoGestion(@RequestBody Map<String, Object> frontendProducto) {
+        try {
+            // Log de datos recibidos
+            System.out.println("Datos recibidos: " + frontendProducto);
+
+            Producto producto = convertToBackendFormat(frontendProducto);
+
+            // Log después de la conversión
+            System.out.println("Producto convertido: " + producto);
+
+            Producto saved = productoService.saveProducto(producto);
+
+            // Log después de guardar el producto
+            System.out.println("Producto guardado: " + saved);
+
+            return ResponseEntity.ok(convertToFrontendFormat(saved));
+        } catch (Exception e) {
+            // Log de la excepción
+            System.err.println("Error al guardar producto: " + e.getMessage());
+            e.printStackTrace();
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("message", "Error al guardar producto: " + e.getMessage()));
+        }
     }
 
     @PutMapping("/{id}")
-    public Map<String, Object> updateProducto(@PathVariable String id, @RequestBody Map<String, Object> frontendProducto) {
-        Producto producto = convertToBackendFormat(frontendProducto);
-        producto.setId(id);
-        Producto updated = productoService.updateProducto(id, producto);
-        if (updated == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado");
+    public ResponseEntity<?> updateProducto(@PathVariable String id, @RequestBody Map<String, Object> frontendProducto) {
+        try {
+            Producto producto = convertToBackendFormat(frontendProducto);
+            Producto updated = productoService.updateProducto(id, producto);
+            return ResponseEntity.ok(convertToFrontendFormat(updated));
+        } catch (AccessDeniedException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-        return convertToFrontendFormat(updated);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProducto(@PathVariable String id) {
-        productoService.deleteProducto(id);
+    public ResponseEntity<Void> deleteProducto(@PathVariable String id) {
+        try {
+            productoService.deleteProducto(id);
+            return ResponseEntity.noContent().build(); // Devuelve 204 No Content, estándar para DELETE exitoso
+        } catch (AccessDeniedException e) {
+            // Si el servicio negó el acceso, devolvemos 403 Forbidden
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     @PostMapping("/descontar-stock")

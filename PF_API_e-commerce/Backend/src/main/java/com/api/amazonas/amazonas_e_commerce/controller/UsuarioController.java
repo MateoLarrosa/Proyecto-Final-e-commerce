@@ -4,7 +4,7 @@ package com.api.amazonas.amazonas_e_commerce.controller;
 import com.api.amazonas.amazonas_e_commerce.model.Usuario;
 // Update the import below to match the actual package of UsuarioService
 import com.api.amazonas.amazonas_e_commerce.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,16 +14,16 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@RequiredArgsConstructor
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<?> crearUsuario(@RequestBody Usuario usuario) {
         try {
-            Usuario nuevoUsuario = usuarioService.crearUsuario(usuario);
-            return ResponseEntity.ok(nuevoUsuario);
+            Map<String, Object> response = usuarioService.crearUsuario(usuario);
+            return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest()
                 .body(Map.of("message", e.getMessage()));
@@ -40,17 +40,19 @@ public class UsuarioController {
         return usuarioService.obtenerUsuarioPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }    
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
         try {
-            return usuarioService.login(credentials.get("email"), credentials.get("password"))
-                .map(userInfo -> ResponseEntity.ok().body(userInfo))
-                .orElse(ResponseEntity.status(401)
-                    .body(Map.of("message", "Email o contraseña incorrectos")));
+            Map<String, Object> response = usuarioService.login(
+                credentials.get("email"), 
+                credentials.get("password")
+            );
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(500)
-                .body(Map.of("message", "Error al intentar hacer login: " + e.getMessage()));
+            return ResponseEntity.status(401)
+                .body(Map.of("message", "Email o contraseña incorrectos"));
         }
     }
 

@@ -26,14 +26,16 @@ function ProductoFormDialog({ open, onClose, onSave, producto, isEditMode }) {
     if (producto) {
       setFormData({
         id: producto.id || undefined,
-        nombre: producto.nombre || '',
-        precio: producto.precio || '',
+        // Usamos los nombres que llegan del frontend: title, price, category, image
+        nombre: producto.title || '',
+        precio: producto.price || '',
         stock: producto.stock || '',
-        categoria: producto.categoria || '',
-        imagen: producto.imagen || ''
+        categoria: producto.category || '',
+        imagen: producto.image || ''
       });
-      setSelectedImage(producto.imagen || '');
-      setImagePreview(producto.imagen || '');
+      // También corregimos aquí para la vista previa de la imagen
+      setSelectedImage(producto.image || '');
+      setImagePreview(producto.image || '');
     } else {
       setFormData({ nombre: '', precio: '', stock: '', categoria: '', imagen: '' });
       setSelectedImage('');

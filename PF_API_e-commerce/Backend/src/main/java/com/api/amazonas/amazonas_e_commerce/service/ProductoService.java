@@ -1,20 +1,32 @@
 package com.api.amazonas.amazonas_e_commerce.service;
 
-import java.util.List;
+import com.api.amazonas.amazonas_e_commerce.model.Producto;
+import com.api.amazonas.amazonas_e_commerce.model.Usuario;
+import com.api.amazonas.amazonas_e_commerce.repository.ProductoRepository;
+import com.api.amazonas.amazonas_e_commerce.repository.UsuarioRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.api.amazonas.amazonas_e_commerce.model.Producto;
-import com.api.amazonas.amazonas_e_commerce.repository.ProductoRepository;
+import java.util.List;
+
+import java.util.List;
 
 @Service
 @Transactional
 public class ProductoService {
-    
-    @Autowired
-    private ProductoRepository productoRepository;
+
+    private final ProductoRepository productoRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    public ProductoService(ProductoRepository productoRepository, UsuarioRepository usuarioRepository) {
+        this.productoRepository = productoRepository;
+        this.usuarioRepository = usuarioRepository;
+    }
 
     public List<Producto> getAllProductos() {
         return productoRepository.findAll();
@@ -24,40 +36,82 @@ public class ProductoService {
         return productoRepository.findById(id).orElse(null);
     }
 
+    // Método para obtener el usuario autenticado actual
+    private Usuario getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName();
+        return usuarioRepository.findByEmail(userEmail)
+            .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+    }
+
+    // Al guardar, nos aseguramos de asignar el ID del usuario correcto
     public Producto saveProducto(Producto producto) {
+        Usuario usuarioActual = getAuthenticatedUser();
+        producto.setUserId(usuarioActual.getId()); // Asignar el ID del usuario autenticado
         return productoRepository.save(producto);
     }
 
     public void deleteProducto(String id) {
-        productoRepository.deleteById(id);
-    }
-    
-    public Producto updateProducto(String id, Producto productoDTO) {
-
-        Producto productoExistente = getProductoById(id);
+        // 1. Obtener el usuario autenticado
+        Usuario usuarioActual = getAuthenticatedUser();
         
-        if (productoExistente != null) {
+        // 2. Obtener el producto que se quiere borrar
+        Producto producto = productoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
+
+        // 3. Verificar permisos: El usuario es ADMIN o es el dueño del producto
+        boolean esAdmin = usuarioActual.getRole().equals("ADMINISTRADOR");
+        boolean esDueño = producto.getUserId().equals(usuarioActual.getId());
+
+        if (esAdmin || esDueño) {
+            productoRepository.deleteById(id);
+        } else {
+            // 4. Si no tiene permisos, lanzar una excepción de acceso denegado
+            throw new AccessDeniedException("No tiene permisos para eliminar este producto");
+        }
+    }
+
+     public Producto updateProducto(String id, Producto productoDTO) {
+        // 1. Obtener el usuario autenticado
+        Usuario usuarioActual = getAuthenticatedUser();
+        
+        // 2. Obtener el producto existente
+        Producto productoExistente = productoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
+
+        // 3. Verificar permisos: El usuario es ADMIN o es el dueño del producto
+        boolean esAdmin = usuarioActual.getRole().equals("ADMINISTRADOR");
+        boolean esDueño = productoExistente.getUserId().equals(usuarioActual.getId());
+
+        if (esAdmin || esDueño) {
             productoExistente.setNombre(productoDTO.getNombre());
             productoExistente.setPrecio(productoDTO.getPrecio());
             productoExistente.setStock(productoDTO.getStock());
             productoExistente.setCategoria(productoDTO.getCategoria());
             productoExistente.setImagen(productoDTO.getImagen());
-            productoExistente.setUserId(productoDTO.getUserId());
+            // Nos aseguramos que el dueño no cambie accidentalmente
+            productoExistente.setUserId(productoExistente.getUserId()); 
             return productoRepository.save(productoExistente);
+        } else {
+            // 4. Si no tiene permisos, lanzar una excepción
+            throw new AccessDeniedException("No tiene permisos para actualizar este producto");
         }
-        return null;
     }
 
-    /**
-     * Descuenta stock de varios productos en una sola operación.
-     * @param productos Lista de productos con id y cantidad a descontar
-     * @return true si todo fue exitoso, false si algún producto no existe o stock insuficiente
-     */
+    public Usuario obtenerUsuarioPorEmail(String email) {
+        return usuarioRepository.findByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con email: " + email));
+    }
+
+    public List<Producto> getProductosByUsuario(Usuario usuario) {
+        return productoRepository.findByUserId(usuario.getId());
+    }
+
     public boolean descontarStockMultiple(List<Producto> productos) {
         for (Producto p : productos) {
             Producto productoBD = getProductoById(p.getId());
             if (productoBD == null) return false;
-            int nuevoStock = productoBD.getStock() - p.getStock(); // p.getStock() es la cantidad a descontar
+            int nuevoStock = productoBD.getStock() - p.getStock();
             if (nuevoStock < 0) return false;
             productoBD.setStock(nuevoStock);
             productoRepository.save(productoBD);
