@@ -159,7 +159,8 @@ function GestionProductos() {
   
     // URL CORRECTA
     const method = isEditMode ? 'PUT' : 'POST';
-    const url = isEditMode ? `<span class="math-inline">\{API\_PRODUCTOS\_URL\}/</span>{productoData.id}` : API_PRODUCTOS_URL;
+    // VERSIÓN CORRECTA (con backticks)
+    const url = isEditMode ? `${API_PRODUCTOS_URL}/${productoData.id}` : API_PRODUCTOS_URL;
   
     const dataToSend = {
       ...productoData,

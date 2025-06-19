@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/api/productos/**").authenticated()
 
                 // REGLAS ESPECÍFICAS
-                .requestMatchers(HttpMethod.GET, "/api/productos/gestion").hasAnyAuthority("ROLE_ADMIN", "ROLE_CLIENTE")
+                .requestMatchers(HttpMethod.GET, "/api/productos/gestion").hasAnyAuthority("ROLE_ADMINISTRADOR", "ROLE_CLIENTE")
                 
                 // CUALQUIER OTRA PETICIÓN
                 .anyRequest().authenticated()

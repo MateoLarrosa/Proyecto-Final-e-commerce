@@ -44,7 +44,7 @@ public class ProductoController {
 
         String email = authentication.getName();
         boolean isAdmin = authentication.getAuthorities().stream()
-            .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"));
+            .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMINISTRADOR"));
         
         System.out.println("[DEBUG] Email: " + email + ", isAdmin: " + isAdmin);
         

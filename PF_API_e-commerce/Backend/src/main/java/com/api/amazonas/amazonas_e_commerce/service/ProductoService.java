@@ -60,7 +60,7 @@ public class ProductoService {
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
 
         // 3. Verificar permisos: El usuario es ADMIN o es el dueño del producto
-        boolean esAdmin = usuarioActual.getRole().equals("ADMIN");
+        boolean esAdmin = usuarioActual.getRole().equals("ADMINISTRADOR");
         boolean esDueño = producto.getUserId().equals(usuarioActual.getId());
 
         if (esAdmin || esDueño) {
@@ -80,7 +80,7 @@ public class ProductoService {
                 .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
 
         // 3. Verificar permisos: El usuario es ADMIN o es el dueño del producto
-        boolean esAdmin = usuarioActual.getRole().equals("ADMIN");
+        boolean esAdmin = usuarioActual.getRole().equals("ADMINISTRADOR");
         boolean esDueño = productoExistente.getUserId().equals(usuarioActual.getId());
 
         if (esAdmin || esDueño) {
