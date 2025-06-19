@@ -47,7 +47,7 @@ public class SecurityConfig {
                 // ---- CAMBIOS IMPORTANTES AQUÍ ----
                 // Cualquier usuario autenticado (sea ADMIN o CLIENTE) puede INTENTAR crear, actualizar o borrar.
                 // La verificación de propiedad se hará en la capa de servicio.
-                .requestMatchers(HttpMethod.POST, "/api/productos").authenticated()
+                .requestMatchers(HttpMethod.POST, "/api/productos/**").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/productos/**").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/api/productos/**").authenticated()
 

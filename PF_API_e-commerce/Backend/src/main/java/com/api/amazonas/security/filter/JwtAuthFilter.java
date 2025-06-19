@@ -46,7 +46,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String userEmail;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            System.out.println("[JWT FILTER] No Authorization header");
+            // Silenciar el log para /actuator/health
+            if (!path.equals("/actuator/health")) {
+                System.out.println("[JWT FILTER] No Authorization header");
+            }
             filterChain.doFilter(request, response);
             return;
         }

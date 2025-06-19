@@ -78,10 +78,42 @@ public class ProductoController {
     }
 
     @PostMapping
-    public Map<String, Object> addProducto(@RequestBody Map<String, Object> frontendProducto) {
-        Producto producto = convertToBackendFormat(frontendProducto);
-        Producto saved = productoService.saveProducto(producto);
-        return convertToFrontendFormat(saved);
+    public ResponseEntity<?> addProducto(@RequestBody Map<String, Object> frontendProducto) {
+        try {
+            Producto producto = convertToBackendFormat(frontendProducto);
+            Producto saved = productoService.saveProducto(producto);
+            return ResponseEntity.ok(convertToFrontendFormat(saved));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("message", "Error al guardar producto: " + e.getMessage()));
+        }
+    }
+
+    @PostMapping("/gestion")
+    public ResponseEntity<?> addProductoGestion(@RequestBody Map<String, Object> frontendProducto) {
+        try {
+            // Log de datos recibidos
+            System.out.println("Datos recibidos: " + frontendProducto);
+
+            Producto producto = convertToBackendFormat(frontendProducto);
+
+            // Log después de la conversión
+            System.out.println("Producto convertido: " + producto);
+
+            Producto saved = productoService.saveProducto(producto);
+
+            // Log después de guardar el producto
+            System.out.println("Producto guardado: " + saved);
+
+            return ResponseEntity.ok(convertToFrontendFormat(saved));
+        } catch (Exception e) {
+            // Log de la excepción
+            System.err.println("Error al guardar producto: " + e.getMessage());
+            e.printStackTrace();
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Map.of("message", "Error al guardar producto: " + e.getMessage()));
+        }
     }
 
     @PutMapping("/{id}")

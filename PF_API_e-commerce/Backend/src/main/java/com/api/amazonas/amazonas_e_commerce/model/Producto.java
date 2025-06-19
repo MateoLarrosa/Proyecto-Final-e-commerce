@@ -30,5 +30,6 @@ public class Producto {
     @Column(length = 20000)
     private String imagen;
 
+    @JoinColumn(name = "userId")
     private String userId;
 }
