@@ -9,7 +9,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import NuevoNavBar from '../../Components/NuevoNavBar';
 import Footer from '../../Components/Footer';
 
-const LOCAL_STORAGE_KEY = 'infoLoginYSeguridadForm';
 
 const InfoLoginYSeguridad = () => {
     
@@ -22,48 +21,46 @@ const InfoLoginYSeguridad = () => {
         telefono: ''
     });
 
-    const [user,setUser] = useState({nombre: "", apellido: "", email: ""});
-
     
+    const [loading, setLoading] = useState(false);
+
+    // Único uso de localStorage para obtener el token:
+    const token = JSON.parse(localStorage.getItem("user"))?.token;
+
+    // Traer los datos del usuario autenticado desde la BD:
     useEffect(() => {
-        // Buscar usuario por email si no hay id
-        const userData = JSON.parse(localStorage.getItem("user"));
-        const token = localStorage.getItem("token");
-        if (userData && userData.email && token) {
-            fetch(`http://localhost:8080/api/users/email/${userData.email}`, {
-                headers: { "Authorization": `Bearer ${token}` }
-            })
-            .then(res => res.ok ? res.json() : null)
-            .then(data => {
-                if (data) {
-                    setUser(data);
-                    setFormData({
-                        nombre: data.nombre || "",
-                        apellido: data.apellido || "",
-                        edad: data.edad || "",
-                        email: data.email || "",
-                        indicativo: data.indicativo || "",
-                        telefono: data.telefono || ""
-                    });
-                }
-            });
-        } else if (userData) {
-            setUser(userData);
-            setFormData({
-                nombre: userData.nombre || "",
-                apellido: userData.apellido || "",
-                edad: userData.edad || "",
-                email: userData.email || "",
-                indicativo: userData.indicativo || "",
-                telefono: userData.telefono || ""
-            })
+        
+        // Se valida que haya un token, sino, mensaje de error:
+        if (!token) {
+            alert("No se encontró el token de autenticacion");
+            return;
         }
 
-        // const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
-        // if (saved) {
-        //     setFormData(JSON.parse(saved));
-        // }
-    }, []);
+        setLoading(true);
+
+        // Fetch al endpoint localhost:8080/api/users/me:
+        fetch("http://localhost:8080/api/users/me",{
+            headers: {"Authorization": `Bearer ${token}`}
+        })
+        .then(res => res.ok ? res.json() : Promise.reject(res))
+        .then(data => {
+
+            // Si todo ok, se settean los campos de texto con la info del usuario:
+            setFormData({
+                nombre: data.nombre || "",
+                apellido: data.apellido || "",
+                edad: data.edad || "",
+                email: data.email || "",
+                indicativo: data.indicativo || "",
+                telefono: data.telefono || ""
+            });
+        })
+        .catch(() => {
+            alert("No se pudo obtener la información del usuario")
+        })
+        .finally(() => setLoading(false));
+
+    }, [token]); // <--- activa todo de vuelta si cambia el token
 
     
     const handleChange = (e) => {
@@ -71,46 +68,67 @@ const InfoLoginYSeguridad = () => {
         setFormData((prev) => ({ ...prev, [id]: value }));
     };
 
-    
+    // Manejo del PATCH para actualizar info del usuario:
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Traigo la informacion del usuario que se logueó...
-        const userData = JSON.parse(localStorage.getItem("user"));
-        
-        // Valido que la info no esté vacía o que no tenga id...
-        if (!userData || !userData.id) {
-            alert("No se encontró el usuario autenticado");
+        // Se valida que haya un token, sino, mensaje de error:
+        if (!token) {
+            alert("No se encontró el token de autenticación");
             return;
         }
 
-        // Preparo el objeto con los datos a actualizar...
-        const updatedUser = {
-            nombre: formData.nombre,
-            apellido: formData.apellido,
-            email: formData.email,
-            edad: formData.edad,
-            telefono: formData.telefono,
-            indicativo: formData.indicativo
+        setLoading(true);
+
+        try {
+            // 1. Obtener todos los datos actuales del usuario
+            const resGet = await fetch("http://localhost:8080/api/users/me", {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            if (!resGet.ok) throw new Error("No se pudo obtener la información actual del usuario");
+            const currentData = await resGet.json();
+
+            // 2. Mezclar los datos actuales con los del formulario
+            const updatedData = {
+                ...currentData,
+                nombre: formData.nombre,
+                apellido: formData.apellido,
+                edad: formData.edad,
+                email: formData.email,
+                indicativo: formData.indicativo,
+                telefono: formData.telefono
+            };
+
+            // 3. Enviar el objeto completo al backend
+            const res = await fetch("http://localhost:8080/api/users/me", {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(updatedData)
+            });
+
+            setLoading(false);
+
+            // Se valida el correcto guardado de la info:
+            if (res.ok) {
+                alert("¡Información guardada correctamente!");
+            } else {
+                let errorMsg = "Error al guardar la información";
+                try {
+                    const errorData = await res.json();
+                    if (errorData && errorData.message) {
+                        errorMsg = errorData.message;
+                    }
+                } catch (e) {}
+                alert(errorMsg);
+            }
+        } catch (error) {
+            setLoading(false);
+            alert(error.message || "Error inesperado");
         }
-
-        // Ejecuto la peticion PATCH para actualizar los datos...
-        const res = await fetch(`http://localhost:8080/api/users/${userData.id}`,{
-            method: "PATCH",
-            headers: {"Content-Type":"application/json"},
-            body: JSON.stringify(updatedUser)
-        });
-
-        // Verifico que los datos se cargaron correctamente...
-        if (res.ok) {
-            alert("¡Información guardada correctamente!");
-
-            // Actualizo el localStorage con los nuevos datos...
-            const newUser = {...userData, ...updatedUser}
-            localStorage.setItem("user", JSON.stringify(newUser))
-
-        } else {alert("Error al guardar la información")}
-    }
+    };
 
     const handleClear = () => {
         localStorage.removeItem("user")

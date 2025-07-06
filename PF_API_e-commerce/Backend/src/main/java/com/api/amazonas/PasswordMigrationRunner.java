@@ -5,7 +5,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import com.api.amazonas.amazonas_e_commerce.repository.UsuarioRepository;
-import com.api.amazonas.amazonas_e_commerce.model.Usuario;
 
 @Component
 public class PasswordMigrationRunner implements CommandLineRunner {

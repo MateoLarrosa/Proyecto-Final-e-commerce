@@ -10,6 +10,11 @@ const ResumenCarrito = ({ total, productos = [] }) => {
 
   const actualizarStock = async () => {
     try {
+      // Obtener token del usuario autenticado
+      const userString = localStorage.getItem('user');
+      const user = userString ? JSON.parse(userString) : null;
+      const token = user?.token;
+
       // Prepara el array de productos completos para descontar stock
       const productosParaDescontar = productos.map(p => ({
         id: p.id,
@@ -20,11 +25,15 @@ const ResumenCarrito = ({ total, productos = [] }) => {
         imagen: p.imagen || p.image,
         userId: p.userId
       }));
+
+      const headers = {
+        'Content-Type': 'application/json',
+        ...(token && { 'Authorization': `Bearer ${token}` })
+      };
+
       const response = await fetch(`${API_URL}/descontar-stock`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify(productosParaDescontar)
       });
       if (!response.ok) throw new Error('Error al descontar stock');

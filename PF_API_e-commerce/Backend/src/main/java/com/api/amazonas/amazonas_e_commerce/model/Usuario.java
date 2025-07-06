@@ -9,6 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"authorities", "accountNonExpired", "accountNonLocked", "credentialsNonExpired", "enabled"})
 public class Usuario implements UserDetails {
     
     @Id
@@ -68,6 +71,29 @@ public class Usuario implements UserDetails {
     @Override
     public String getUsername() {
         return email; // Usamos el email como username
+    }
+
+    // Getters para los campos que podrian quedar vacios...
+    public String getEdad(){
+        return (edad != null) ? edad : "";
+    }
+    public String getTelefono(){
+        return (telefono != null) ? telefono : "";
+    }
+    public String getIndicativo(){
+        return (indicativo != null) ? indicativo : "";
+    }
+    public String getCalleYAltura(){
+        return (calleYAltura != null) ? calleYAltura : "";
+    }
+    public String getProvincia(){
+        return (provincia != null) ? provincia : "";
+    }
+    public String getCiudad(){
+        return (ciudad != null) ? ciudad : "";
+    }
+    public String getCodigoPostal(){
+        return (codigoPostal != null) ? codigoPostal : "";
     }
 
     @Override

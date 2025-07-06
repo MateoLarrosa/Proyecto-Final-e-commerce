@@ -7,13 +7,16 @@ import com.api.amazonas.amazonas_e_commerce.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 import java.util.Map;
 
+
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174"}, allowCredentials = "true")
 @RequiredArgsConstructor
 public class UsuarioController {
 
@@ -29,6 +32,21 @@ public class UsuarioController {
                 .body(Map.of("message", e.getMessage()));
         }
     }
+
+    // GetMapping que permite obtener un usuario por su email... 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Usuario> obtenerUsuarioPorEmail(@PathVariable String email) {
+        return usuarioService.obtenerUsuarioPorEmail(email).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+    
+    // GetMapping para obtener la info del usuario autenticado:
+    @GetMapping("/me")
+    public ResponseEntity<Usuario> obtenerUsuarioActual(Authentication authentication) {
+    String email = authentication.getName();
+    return usuarioService.obtenerUsuarioPorEmail(email)
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.notFound().build());
+}
 
     @GetMapping
     public ResponseEntity<List<Usuario>> obtenerTodosLosUsuarios() {
@@ -66,6 +84,16 @@ public class UsuarioController {
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    // 
+    @PatchMapping("/me")
+    public ResponseEntity<Usuario> actualizarUsuarioActual(@RequestBody Usuario usuarioActualizado, Authentication authentication) {
+        String email = authentication.getName();
+        Usuario usuario = usuarioService.obtenerUsuarioPorEmail(email)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        Usuario actualizado = usuarioService.actualizarUsuario(usuario.getId(), usuarioActualizado);
+        return ResponseEntity.ok(actualizado);
     }
 
     @DeleteMapping("/{id}")

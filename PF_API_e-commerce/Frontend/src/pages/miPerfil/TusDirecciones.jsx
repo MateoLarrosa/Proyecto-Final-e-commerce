@@ -8,32 +8,43 @@ import Footer from '../../Components/Footer';
 
 
 const TusDirecciones = () => {
-
-    // Creo un useState para controlar los inputs del formulario...
     const [formData,setFormData] = useState({
         CalleYAltura:'',
         Provincia:'',
         Ciudad:'',
         CodigoPostal:''
     })
+    const [loading, setLoading] = useState(false);
 
-    // Creo un useEffect para traer info del usuario logueado al formulario cuando carga el componente por primera vez...
+    // Obtener token del localStorage
+    const token = JSON.parse(localStorage.getItem("user"))?.token;
+
     useEffect(() => {
+        if (!token) {
+            alert("No se encontró el token de autenticación");
+            return;
+        }
 
-        // Obtengo toda la info del usuario que esté guardada en el localStorage...
-      const userData = JSON.parse(localStorage.getItem("user"));
-    
-        //   Si esa info existe, settea el obj formData con la info que corresponda...
-      if (userData) {
-        setFormData({
-            CalleYAltura: userData.CalleYAltura || "",
-            Provincia: userData.Provincia || "",
-            Ciudad: userData.Ciudad || "",
-            CodigoPostal: userData.CodigoPostal || ""
+        setLoading(true);
+        
+        fetch("http://localhost:8080/api/users/me", {
+            headers: {"Authorization": `Bearer ${token}`}
         })
-      }
-    }, [])
-    
+        .then(res => res.ok ? res.json() : Promise.reject(res))
+        .then(data => {
+            setFormData({
+                CalleYAltura: data.calleYAltura || "",
+                Provincia: data.provincia || "",
+                Ciudad: data.ciudad || "",
+                CodigoPostal: data.codigoPostal || ""
+            })
+        })
+        .catch(() => {
+            alert("No se pudo obtener la información de direcciones del usuario")
+        })
+        .finally(() => setLoading(false));
+    }, [token])
+
     // Función que actualiza el obj de estado formData cada vez que el usuario tipea en los campos de texto...
     const handleChange = (e) => {
 
@@ -46,44 +57,48 @@ const TusDirecciones = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        // Traigo la informacion del usuario que se logueó...
-        const userData = JSON.parse(localStorage.getItem("user"));
-        
-        // Valido que la info no esté vacía o que no tenga id...
-        if (!userData || !userData.id) {
-            alert("No se encontró el usuario autenticado");
+        if (!token) {
+            alert("No se encontró el token de autenticación");
             return;
         }
-
-        // Preparo el objeto con los datos a actualizar...
-        const updatedUser = {
-            CalleYAltura: formData.CalleYAltura,
-            Provincia: formData.Provincia,
-            Ciudad: formData.Ciudad,
-            CodigoPostal: formData.CodigoPostal
+        setLoading(true);
+        try {
+            // 1. Obtener todos los datos actuales del usuario
+            const resGet = await fetch("http://localhost:8080/api/users/me", {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            if (!resGet.ok) throw new Error("No se pudo obtener la información actual del usuario");
+            const currentData = await resGet.json();
+            // 2. Mezclar los datos actuales con los del formulario
+            const updatedData = {
+                ...currentData,
+                calleYAltura: formData.CalleYAltura,
+                provincia: formData.Provincia,
+                ciudad: formData.Ciudad,
+                codigoPostal: formData.CodigoPostal
+            };
+            // 3. Enviar el objeto completo al backend
+            const res = await fetch("http://localhost:8080/api/users/me", {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(updatedData)
+            });
+            setLoading(false);
+            if (res.ok) {
+                alert("¡Información guardada correctamente!");
+            } else {
+                alert("Error al guardar la información");
+            }
+        } catch (error) {
+            setLoading(false);
+            alert(error.message || "Error inesperado");
         }
-
-        // Ejecuto la peticion PATCH para actualizar los datos...
-        const res = await fetch(`http://localhost:8080/api/users/${userData.id}`,{
-            method: "PATCH",
-            headers: {"Content-Type":"application/json"},
-            body: JSON.stringify(updatedUser)
-        });
-
-        // Verifico que los datos se cargaron correctamente...
-        if (res.ok) {
-            alert("¡Información guardada correctamente!");
-
-            // Actualizo el localStorage con los nuevos datos...
-            const newUser = {...userData, ...updatedUser}
-            localStorage.setItem("user", JSON.stringify(newUser))
-
-        } else {alert("Error al guardar la información")}
     }
 
     const handleClear = () => {
-        localStorage.removeItem("user")
         setFormData({
             CalleYAltura: '',
             Provincia: '',

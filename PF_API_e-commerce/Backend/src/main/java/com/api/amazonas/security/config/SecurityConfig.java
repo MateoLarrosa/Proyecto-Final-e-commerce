@@ -47,8 +47,11 @@ public class SecurityConfig {
                 // ---- CAMBIOS IMPORTANTES AQUÍ ----
                 // Cualquier usuario autenticado (sea ADMIN o CLIENTE) puede INTENTAR crear, actualizar o borrar.
                 // La verificación de propiedad se hará en la capa de servicio.
+                .requestMatchers(HttpMethod.GET, "/api/users/email/**").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/users/me").authenticated()
                 .requestMatchers(HttpMethod.POST, "/api/productos/**").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/productos/**").authenticated()
+                .requestMatchers(HttpMethod.PATCH, "/api/users/me").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/api/productos/**").authenticated()
 
                 // REGLAS ESPECÍFICAS
@@ -69,8 +72,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:5173", "http://localhost:5174"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*", "Authorization", "Content-Type"));
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
         configuration.setAllowCredentials(true);
